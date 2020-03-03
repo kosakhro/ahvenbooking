@@ -1,0 +1,210 @@
+package fxAhvenbooking;
+
+
+import java.awt.Desktop;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+
+import bookings.CalendarView;
+import bookings.Client;
+import fi.jyu.mit.fxgui.Dialogs;
+import fi.jyu.mit.fxgui.ListChooser;
+import fi.jyu.mit.fxgui.TextAreaOutputStream;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
+import javafx.scene.text.Font;
+//import javafx.scene.control.Label;
+import javafx.stage.Stage;
+
+
+
+/**
+ * @author Konstantin Sakharovskiy
+ * @version Feb 7, 2019
+ * event handle for main page
+ */
+public class AhvenbookingGUIController implements Initializable {
+    
+    
+    
+    @FXML private ScrollPane panelClient;
+    @FXML private ListChooser<Client> chooser;
+    
+
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle bundle) {
+        platform();      
+    }
+       
+    
+    @FXML private void DoseNotWork() {
+        
+        Dialogs.showMessageDialog("Does not work yet, keep calm");
+        
+    }
+    
+    @FXML private void handlePressedClientSearch() {
+
+    try {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ClientSearchView.fxml"));
+        Parent root1 = (Parent) fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.setTitle("New windows");
+        stage.setScene(new Scene(root1));
+        stage.show();
+
+    } catch(Exception e) {
+        e.printStackTrace();
+    }
+
+    }
+    
+
+    @FXML private void handlePressedReservationSearch() {
+
+    try {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ReservationSearchView.fxml"));
+        Parent root1 = (Parent) fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.setTitle("New windows");
+        stage.setScene(new Scene(root1));
+        stage.show();
+
+    } catch(Exception e) {
+        e.printStackTrace();
+    }
+
+    }    
+    
+    
+    @FXML private void handlePressedClientCard() {
+
+    newClient();
+
+    }
+    
+    
+    @FXML private void handleHelp() {
+        helping();
+    }
+    
+    
+    @FXML private void handlePressedReservationCard() {
+
+    try {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ReservationCardView.fxml"));
+        Parent root1 = (Parent) fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.setTitle("New windows");
+        stage.setScene(new Scene(root1));
+        stage.show();
+
+    } catch(Exception e) {
+        e.printStackTrace();
+    }
+
+    }
+    
+    
+    //==================================================
+    
+    CalendarView calendar = new CalendarView();   
+    private TextArea areaClient = new TextArea();
+    
+    
+    /**
+     * set platform to show client
+     */
+    protected void platform() {
+        panelClient.setContent(areaClient);
+
+        areaClient.setFont(new Font("Helvetica", 10));
+        panelClient.setFitToHeight(true);
+
+        chooser.clear();
+        chooser.addSelectionListener(e -> showClient());
+    }
+    
+    /**
+     * show client by asking Clent class
+     */
+    protected void showClient() {
+        Client jasenKohdalla = chooser.getSelectedObject();
+        if (jasenKohdalla == null) return;
+        areaClient.setText("");
+        try (PrintStream os = TextAreaOutputStream.getTextPrintStream(areaClient)) {
+            jasenKohdalla.printing(os);
+        }
+    }
+
+    /**
+     *  adding client by asking Client class
+     */
+    protected void newClient() {
+        Client client = new Client();
+        client.register();
+        client.autogenerateContent();
+        
+        try {
+            calendar.add(client);
+        } catch (Exception e) {
+            Dialogs.showMessageDialog("No more clients allowed ");
+            return;
+        }       
+        search(client.getRegisterNro());       
+    }
+    
+    /**
+     * search client by number
+     * @param clientnro clients number
+     */
+    protected void search(int clientnro) {
+        chooser.clear();
+        int index = 0;
+        for (int i = 0; i < calendar.getClients(); i++) {
+            Client client = calendar.giveClient(i);
+            if (client.getRegisterNro() == clientnro) index = i;
+            chooser.add(client.getName(), client);
+        }
+        chooser.setSelectedIndex(index); 
+    }
+    
+        
+    /**
+     * set own calendar
+     * @param calendar using calendar
+     */
+    public void setCalendarView(CalendarView calendar) {
+        this.calendar = calendar;
+        showClient();
+    }
+    
+    /**
+     * link request to the program help page
+     */
+    private void helping() {
+        Desktop desktop = Desktop.getDesktop();
+        try {
+            URI uri = new URI("https://tim.jyu.fi/view/kurssit/tie/ohj2/2019k/ht/ahvenbooking");
+            desktop.browse(uri);
+        } catch (URISyntaxException e) {
+            return;
+        } catch (IOException e) {
+            return;
+        }
+    }
+    
+    
+}

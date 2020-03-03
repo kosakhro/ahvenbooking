@@ -1,0 +1,35 @@
+package fxAhvenbooking;
+	
+import javafx.application.Application;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
+import javafx.fxml.FXMLLoader;
+
+
+/**
+ * @author Konstantin Sakharovskiy
+ * @version Feb 7, 2019
+ * Start main program
+ */
+public class AhvenbookingMain extends Application {
+	@Override
+	public void start(Stage primaryStage) {
+		try {
+			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("AhvenbookingGUIView.fxml"));
+			Scene scene = new Scene(root);
+			scene.getStylesheets().add(getClass().getResource("ahvenbooking.css").toExternalForm());
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * @param args Not in use
+	 */
+	public static void main(String[] args) {
+		launch(args);
+	}
+}

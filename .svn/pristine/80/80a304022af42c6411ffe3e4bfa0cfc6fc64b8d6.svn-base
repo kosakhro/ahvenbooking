@@ -1,0 +1,21 @@
+/**
+ * 
+ */
+package bookings;
+
+/**
+ * @author Konsta Sakharovskiy 
+ * @version Mar 8, 2019
+ *
+ */
+public class RoomsBase {
+
+    /**
+     * @param args not in use
+     */
+    public static void main(String[] args) {
+    // TODO Auto-generated method stub
+    
+    }
+
+}

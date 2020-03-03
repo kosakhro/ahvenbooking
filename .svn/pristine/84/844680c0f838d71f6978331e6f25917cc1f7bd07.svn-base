@@ -1,0 +1,12 @@
+!https://tim.jyu.fi/view/kurssit/tie/ohj2/2019k/ht/ahvenbooking = Project plan in TIM
+kuvat/calendar.jpg = program main window
+kuvat/clients.jpg     = search engine and access to clients data base
+kuvat/clientsdropdown.jpg     = search engine with results
+kuvat/form.jpg   = make clients card  and change the data
+kuvat/formaddress.jpg   = address details of the client
+kuvat/formcontact.jpg   = contact details of the client
+kuvat/formdetails.jpg   = id and other info of the client
+kuvat/formheader.jpg   = unique number, name and buttons
+kuvat/formreservationhistory.jpg   = list of client's reservations
+kuvat/reservation.jpg  = view reservation form
+kuvat/database.jpg  = the picture of database

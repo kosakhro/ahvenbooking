@@ -1,0 +1,58 @@
+package database;
+
+/**
+ * @author Konsta Sakharovskiy 
+ * @version Mar 1, 2019
+ *
+ */
+public class DataGenerate {
+
+
+   
+    /**
+     * @param minimum data generate minimum
+     * @param maximum data genetrate maximum
+     * @return data
+     */
+    public static int rand(int minimum, int maximum) {
+      double n = (maximum-minimum)*Math.random() + minimum;
+      return (int)Math.round(n);
+    }
+
+   
+
+    /**
+     * @return generated random date data
+     */
+    public static String generateDate() {
+        return  String.format("%02d",rand(1,28))   + "." +
+        String.format("%02d",rand(1,12))   + "." +
+        String.format("%02d",rand(1900,2019));   
+    }
+    
+    /**
+     * @return generated random 0 or 1
+     */
+    public static int generateBinary() {
+        return  rand(0,1);   
+    }
+    
+    /**
+     * @return generated random gender
+     */
+    public static String generateGender() {
+        int i = generateBinary();
+        if (i == 0 ) return "Mr.";
+        return  "Mrs.";   
+    }
+    
+    /**
+     * @return generated random true or false
+     */
+    public static boolean generateLogic() {
+        int i = generateBinary();
+        if (i == 0 ) return true;
+        return  false;   
+    }
+   
+}

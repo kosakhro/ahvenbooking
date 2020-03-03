@@ -1,0 +1,112 @@
+package bookings;
+
+
+/**
+ * - maintain the actual information about clients
+ * - add remove and change clients                
+ * - upload and print clients information         
+ * - searching, sorting and filtering
+ * @author Konsta Sakharovskiy 
+ * @version Mar 5, 2019
+ *
+ */
+public class ClientsBase {
+
+    
+    private static final int MEMBERS_LIMIT   = 8;
+    private int              qnt             = 0;
+    private Client           clients[]       = new Client[MEMBERS_LIMIT];
+    
+    
+    /**
+     * main method for testing purposes
+     * @param args not in use
+     */
+    public static void main(String[] args) {
+        ClientsBase testing = new ClientsBase();
+        
+        Client donald = new Client(), kim = new Client();
+        
+        donald.register();
+        kim.register();
+                
+        donald.autogenerateContent();
+        kim.autogenerateContent();
+        
+        try {
+            testing.add(kim);
+            testing.add(donald);
+
+            
+            for (int i = 0; i < testing.getQnt(); i++) {
+                Client client = testing.give(i);
+                System.out.println("=======================================");
+                client.printing(System.out);
+            }
+            
+                        
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    
+    
+    }
+    
+    /**
+     * initial
+     */
+    public ClientsBase(){
+        //
+    }
+        
+    /**
+     * @param client adding client to clients array
+     * @throws Exception if clients array is full
+     * <pre name="test">
+     * #THROWS Exception
+     * ClientsBase clients = new ClientsBase();
+     * Client ronald = new Client(), george = new Client();
+     * clients.getQnt() === 0;
+     * clients.add(ronald); clients.getQnt() === 1;
+     * clients.add(george); clients.getQnt() === 2;
+     * clients.add(ronald); clients.getQnt() === 3;
+     * clients.give(0) === ronald;
+     * clients.give(1) === george;
+     * clients.give(2) === ronald;
+     * clients.give(1) == ronald === false;
+     * clients.give(1) == george === true;
+     * clients.give(3) === ronald; #THROWS IndexOutOfBoundsException
+     * clients.add(ronald); clients.getQnt() === 4;
+     * clients.add(ronald); clients.getQnt() === 5;
+     * clients.add(ronald);  #THROWS Exception
+     * </pre>
+     */
+    public void add(Client client) throws Exception {
+        if (qnt >= clients.length) throw new Exception("...TODO...");
+        clients[qnt] = client;
+        qnt++;
+    }
+
+    
+    /**
+     * return the client on index i of array
+     * @param i place in clients array
+     * @return client from clients array at position i
+     * @throws IndexOutOfBoundsException Exception if number is out
+     */
+    public Client give(int i) throws IndexOutOfBoundsException {
+        if (i < 0 || qnt <= i)
+            throw new IndexOutOfBoundsException("Unacceptable position: " + i);
+        return clients[i];
+    }
+    
+    
+    /**
+     * @return clients quantity
+     */
+    public int getQnt() {
+        return this.qnt;
+    }
+
+}

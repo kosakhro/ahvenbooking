@@ -1,0 +1,39 @@
+package bookings;
+
+import java.util.Iterator;
+
+/**
+ * @author Konsta Sakharovskiy 
+ * @version Mar 8, 2019
+ *
+ */
+public class ReservationsBase implements Iterable<Reservation> {
+    
+    
+    
+    
+
+    /**
+     * @param args not in use
+     */
+    public static void main(String[] args) {
+        //ReservationsBase resbase = new ReservationsBase();
+        Reservation testingRes1 = new Reservation();
+        Reservation testingRes2 = new Reservation();
+        Reservation testingRes3 = new Reservation();
+        testingRes1.assignReservation(222);
+        testingRes2.assignReservation(333);
+        testingRes3.assignReservation(444);
+        
+        
+        
+   
+    }
+
+    @Override
+    public Iterator<Reservation> iterator() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+}

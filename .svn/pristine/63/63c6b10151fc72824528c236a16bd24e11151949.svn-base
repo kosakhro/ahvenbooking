@@ -1,0 +1,338 @@
+package bookings;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+
+/**
+ * maintain the actual information about reservations
+ * add remove and change reservations
+ * upload and print reservations information
+ * searching, sorting and filtering 
+ * @author Konsta Sakharovskiy 
+ * @version Mar 8, 2019
+ *
+ */
+public class ReservationsBase implements Iterable<Reservation> {
+    
+    
+    
+    private Collection<Reservation> reservations = new ArrayList<Reservation>();
+    private String           fullName        = "";
+    private String           dataBaseName    = "";
+
+    /**
+     * main method for testing
+     * @param args not in use
+     */
+    public static void main(String[] args) {
+        
+        ReservationsBase resbase = new ReservationsBase();
+        
+        Reservation testingRes1 = new Reservation();
+        Reservation testingRes2 = new Reservation();
+        Reservation testingRes3 = new Reservation();
+        
+        testingRes1.assignReservation(222);
+        testingRes2.assignReservation(333);
+        testingRes3.assignReservation(444);
+        
+        testingRes1.register();
+        testingRes2.register();
+        testingRes3.register();
+        
+        resbase.add(testingRes1);
+        resbase.add(testingRes2);
+        resbase.add(testingRes3);
+        
+        
+        
+        List<Reservation> reservations2 = resbase.giveReservations(222);
+        
+        for (Reservation res : reservations2) {
+            System.out.println("========================================");
+            res.printing(System.out);
+        }
+        
+   
+    }
+    
+    /**
+     * initialize reservation
+     */
+    public ReservationsBase() {
+        // access method if reservation without client
+    }
+    
+    /**
+     * add reservation to reservations list
+     * @param res reservaton to add
+     */
+    public void add(Reservation res) {
+        reservations.add(res);
+    }
+    
+    
+    /**
+     * @return reservations quantity
+     */
+    public int getQnt() {
+        return reservations.size();
+    }
+    
+
+    
+    /**
+     * Itarate through all reservations
+     * @return reservation iterator
+     * 
+     * @example
+     * <pre name="test">
+     * #PACKAGEIMPORT
+     * #import java.util.*;
+     * 
+     *  ReservationsBase test = new ReservationsBase();
+     *  Reservation res1 = new Reservation(2); test.add(res1);
+     *  Reservation res2 = new Reservation(1); test.add(res2);
+     *  Reservation res3 = new Reservation(2); test.add(res3);
+     *  Reservation res4 = new Reservation(1); test.add(res4);
+     *  Reservation res5 = new Reservation(2); test.add(res5);
+     * 
+     *  Iterator<Reservation> testIterator = test.iterator();
+     *  testIterator.next() === res1;
+     *  testIterator.next() === res2;
+     *  testIterator.next() === res3;
+     *  testIterator.next() === res4;
+     *  testIterator.next() === res5;
+     *  testIterator.next() === res1;  #THROWS NoSuchElementException  
+     *  
+     *  int n = 0;
+     *  int jnrot[] = {2,1,2,1,2};
+     *  
+     *  for ( Reservation res : test ) { 
+     *    res.getClientsNo() === jnrot[n]; n++;  
+     *  }
+     *  
+     *  n === 5;
+     *  
+     * </pre>
+     */ 
+    @Override
+    public Iterator<Reservation> iterator() {
+
+        return reservations.iterator();
+    }
+    
+    
+    /**
+     * Search and return reservations by client's id
+     * @param clientsNo clients id
+     * @return found reservations in list
+     ** @example
+     * <pre name="test">
+     * #import java.util.*;
+     *  ReservationsBase test = new ReservationsBase();
+     *  Reservation res1 = new Reservation(2); test.add(res1);
+     *  Reservation res2 = new Reservation(1); test.add(res2);
+     *  Reservation res3 = new Reservation(2); test.add(res3);
+     *  Reservation res4 = new Reservation(1); test.add(res4);
+     *  Reservation res5 = new Reservation(2); test.add(res5);
+     *  Reservation res6 = new Reservation(5); test.add(res6);
+     *  List<Reservation> found;
+     *  found = test.giveReservations(3);
+     *  found.size() === 0; 
+     *  found = test.giveReservations(1);
+     *  found.size() === 2; 
+     *  found.get(0) == res2 === true;
+     *  found.get(1) == res4 === true;
+     *  found = test.giveReservations(5);
+     *  found.size() === 1; 
+     *  found.get(0) == res6 === true;
+     * </pre> 
+     */
+    public List<Reservation> giveReservations(int clientsNo) {
+        List<Reservation> found = new ArrayList<Reservation>();
+        for (Reservation res : reservations)
+            if (res.getClientsNo() == clientsNo) found.add(res);
+        return found;
+    }
+    
+    /**
+     * Read reservations  data from database
+     * @param databaseName name of database
+     * @throws HoldException if reading problems occur
+     */
+    public void readData(String databaseName) throws HoldException {
+        setDataBaseName(databaseName);
+        try ( BufferedReader fi = new BufferedReader(new FileReader(getDataName())) ) {
+            fullName = fi.readLine();
+            if ( fullName == null ) throw new HoldException("missed name");
+            String line = fi.readLine();
+            if ( line == null ) throw new HoldException("miss the size");
+
+
+            while ( (line = fi.readLine()) != null ) {
+                line = line.trim();
+                if ( "".equals(line) || line.charAt(0) == ';' ) continue;
+                Reservation reserv = new Reservation();
+                reserv.parse(line);
+                add(reserv);
+            }
+        } catch ( FileNotFoundException e ) {
+            throw new HoldException("Can't open " + getDataName());
+        } catch ( IOException e ) {
+            throw new HoldException("probblemm: " + e.getMessage());
+        }
+    }
+    
+    /**
+     * @throws HoldException if reading problem occurs
+     */
+    public void readData() throws HoldException {
+        readData(getDataBaseName());
+    }
+    
+    
+    /**
+     * Save reservations data to database
+     * @throws HoldException if saving problem occurs
+     * @example
+     * <pre name="test">
+     * #THROWS HoldException 
+     * #import java.io.File;
+     * #import java.util.Iterator;
+     * 
+     *  ReservationsBase reserv = new ReservationsBase();
+     *  Reservation reserv1 = new Reservation(), reserv2 = new Reservation();
+     *  reserv1.assignReservation(777);
+     *  reserv1.register();
+     *  reserv2.assignReservation(555);
+     *  reserv2.register();
+     *  String folder = "testings";
+     *  String databaseName = folder+"/reservations";
+     *  File dir = new File(folder);
+     *  dir.mkdir();
+     *  
+     *  reserv.readData(databaseName); #THROWS HoldException
+     *  reserv.add(reserv1);
+     *  reserv.add(reserv2); 
+     *  Iterator<Reservation> i = reserv.iterator();
+     *  i.next() === reserv1;
+     *  i.next() === reserv2;
+     *  i.hasNext() === false;
+     *  reserv.saveData();
+     *  
+     *  reserv = new ReservationsBase(); 
+     *  reserv.readData(databaseName);
+     *  Iterator<Reservation> u = reserv.iterator();
+     *  u.next() === reserv1;
+     *  u.next() === reserv2;
+     *  u.hasNext() === false;    
+     *  reserv.add(reserv2);
+     *  reserv.saveData();
+     *  File bakOver = new File(databaseName+".bak");
+     *  bakOver.delete() === true;
+     *  File datOver = new File(databaseName+".dat");
+     *  datOver.delete() === true;
+     * </pre>
+     */
+    public void saveData() throws HoldException {
+        File fbak = new File(getBakName());
+        File ftied = new File(getDataName());
+        fbak.delete(); 
+        ftied.renameTo(fbak); 
+
+        try ( PrintWriter fo = new PrintWriter(new FileWriter(ftied.getCanonicalPath())) ) {
+            fo.println(getFullName());
+            fo.println(reservations.size());
+            for (Reservation reserv : this) {
+                fo.println(reserv.toString());
+            }
+        } catch ( FileNotFoundException ex ) {
+            throw new HoldException("Database " + ftied.getName() + " can't open");
+        } catch ( IOException ex ) {
+            throw new HoldException("Database " + ftied.getName() + " writing problem");
+        }
+
+    }
+    
+    
+    /**
+     * return collection reservations searched by condition
+     * @param condition search string
+     * @param i position
+     * @return reservations in collection
+     */
+    @SuppressWarnings("unused")
+    public Collection<Reservation> search(String condition, int i){
+        Collection<Reservation> found = new ArrayList<Reservation>();
+        for  (Reservation reser : this) {
+            found.add(reser);
+        }
+        return found;
+    }
+    
+    
+    /**
+     * getting database backup name
+     * @return database backup name
+     */
+    public String getBakName() {
+        return dataBaseName + ".bak";
+    }
+    
+    /**
+     * getting database dat name
+     * @return database dat name
+     */
+    public String getDataName() {
+        return getDataBaseName() + ".dat";
+    }
+    
+    /**
+     * setting database name
+     * @param name database name
+     */
+    public void setDataBaseName(String name) {
+        dataBaseName = name;
+    }
+    
+    /**
+     * getting database name
+     * @return database name
+     */
+    public String getDataBaseName() {
+        return dataBaseName;
+    }
+    
+    /**
+     * getting database full name
+     * @return full name
+     */
+    public String getFullName() {
+        return fullName;
+    }
+    
+    
+    public void replaceOrAddReservation(Reservation reserv) {
+        int id = reserv.getReservationNo();
+        for (Reservation r : reservations) {
+            if (r.getReservationNo() == id) {
+                r = reserv;
+                return;
+            }
+        }
+        add(reserv);       
+    }
+    
+    
+
+}

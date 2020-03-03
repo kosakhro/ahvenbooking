@@ -1,0 +1,274 @@
+package fxAhvenbooking;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import fi.jyu.mit.fxgui.Dialogs;
+import fi.jyu.mit.fxgui.ModalController;
+import fi.jyu.mit.fxgui.ModalControllerInterface;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import bookings.Client;
+
+/**
+ * @author Konstantin Sakharovskiy
+ * @version Feb 7, 2019
+ * event handle for Client Card page
+ */
+public class ClientCardGUIController implements ModalControllerInterface<Client>, Initializable  {
+
+    
+    @FXML private Label warning;
+    
+    
+    @FXML private TextField editName         ;
+    @FXML private TextField editSurname      ;
+    @FXML private TextField editStreet       ;
+    @FXML private TextField editStreet2      ;
+    @FXML private TextField editZIP          ;
+    @FXML private TextField editCity         ;
+    @FXML private TextField editcountry      ;
+    @FXML private TextField editemail        ;
+    @FXML private TextField editphone        ;
+    @FXML private TextField editphone2       ;
+    @FXML private TextField editfax          ;
+    @FXML private TextField editsubscript    ;
+    @FXML private TextField editotherConta   ;
+    @FXML private TextField editsome         ;
+    @FXML private TextField editlanguage     ;
+    @FXML private TextField editcomments     ;
+    @FXML private TextField editnationalit   ;
+    @FXML private TextField editpassportNo   ;
+    @FXML private TextField editdateOfBirt   ;
+    @FXML private TextField editsocialSecN   ;
+    @FXML private TextField editaccount      ;
+    @FXML private TextField editloyality     ;
+    @FXML private TextField editTitle        ;
+
+
+    
+    
+    @FXML private void DoseNotWork() {
+        
+        Dialogs.showMessageDialog("Does not work yet, keep calm");
+        
+    }
+    
+    @FXML private void handleSave() {
+        
+        ModalController.closeStage(warning);
+        //
+    }
+    
+    @FXML private void handleDelete() {
+        ModalController.closeStage(warning);
+        //
+    }
+    
+    @FXML private void handleNewReservation() {
+        //
+    }
+    
+    @FXML private void handleCloseWithoutSaving() {
+        clientPoint = null;
+        ModalController.closeStage(warning);
+        
+    }
+    
+
+
+    //==================================================
+    
+    private Client clientPoint;
+    private TextField[] fields;
+
+    
+
+    @Override
+    public void initialize(URL url, ResourceBundle bundle) {
+        platform();
+        
+    }
+
+    private void platform() {
+        fields = new TextField[]{editName, 
+                                editSurname, 
+                                editStreet,
+                                editStreet2,
+                                editZIP,
+                                editCity,
+                                editcountry,    
+                                editemail ,     
+                                editphone ,     
+                                editphone2 ,    
+                                editfax   ,     
+                                editsubscript  ,
+                                editotherConta ,
+                                editsome   ,    
+                                editlanguage,   
+                                editcomments   ,
+                                editnationalit ,
+                                editpassportNo ,
+                                editdateOfBirt ,
+                                editsocialSecN ,
+                                editaccount    ,
+                                editloyality   ,
+                                editTitle      };
+        int i = 0;
+        for (TextField field : fields) {
+            final int k = ++i;
+            field.setOnKeyReleased( e -> clientChange(k, (TextField)(e.getSource())));
+        }
+
+        
+        
+    }
+
+    private void clientChange(int k, TextField textField) {
+        if (clientPoint == null) return;
+        String s = textField.getText();
+        String virhe = null;
+        switch (k) {
+        case  1 : virhe = clientPoint.setName(s);        break;
+        case  2 : virhe = clientPoint.setSurname(s);     break;
+        case  3 : virhe = clientPoint.setStreet(s);      break;
+        case  4 : virhe = clientPoint.setStreet2(s);     break;
+        case  5 : virhe = clientPoint.setZIP(s);         break;
+        case  6 : virhe = clientPoint.setCity(s);        break;
+        case  7 : virhe = clientPoint.setCountry(s);        break;
+        case  8 : virhe = clientPoint.setEmail(s);        break;
+        case  9 : virhe = clientPoint.setPhone(s);        break;
+        case 10 : virhe = clientPoint.setPhone2(s);        break;
+        case 11 : virhe = clientPoint.setFax(s);        break;
+        case 12 : virhe = clientPoint.setSubscript(s);        break;
+        case 13 : virhe = clientPoint.setOtherConta(s);        break;
+        case 14 : virhe = clientPoint.setSome(s);        break;
+        case 15 : virhe = clientPoint.setLanguage(s);        break;
+        case 16 : virhe = clientPoint.setComments(s);        break;
+        case 17 : virhe = clientPoint.setNationalit(s);        break;
+        case 18 : virhe = clientPoint.setPassportNo(s);        break;
+        case 19 : virhe = clientPoint.setDateOfBirt(s);        break;
+        case 20 : virhe = clientPoint.setSocialSecN(s);        break;
+        case 21 : virhe = clientPoint.setAccount(s);        break;
+        case 22 : virhe = clientPoint.setLoyality(s);        break;
+        case 23 : virhe = clientPoint.setTitle(s);        break;
+                                        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        default :
+       
+        }
+        
+        if (virhe == null) {
+            Dialogs.setToolTipText(textField, "");
+            textField.getStyleClass().removeAll("virhe");
+            naytaVirhe(virhe);
+        } else {
+            Dialogs.setToolTipText(textField, virhe);
+            textField.getStyleClass().add("virhe");
+            naytaVirhe(virhe);
+        }
+        
+        
+        
+    }
+
+    private void naytaVirhe(String virhe) {
+        if (virhe == null || virhe.isEmpty()) {
+            warning.setText("");
+            warning.getStyleClass().removeAll("virhe");
+            return;
+        }
+        warning.setText(virhe);
+        warning.getStyleClass().add("virhe");
+        
+        
+    }
+
+    @Override
+    public Client getResult() {
+        return clientPoint;
+    }
+
+    @Override
+    public void handleShown() {
+        editName.requestFocus();
+        
+    }
+
+
+    @Override
+    public void setDefault(Client client) {
+        
+        clientPoint = client;
+        showClient(clientPoint);
+        
+        
+    }
+    
+    /**
+     * @param client - Client to show
+     */
+    public void showClient(Client client) {
+        if (client == null) return;
+        fields[ 0].setText(client.getName());
+        fields[ 1].setText(client.getSurame());
+        fields[ 2].setText(client.getStreet());
+        fields[ 3].setText(client.getStreet2());
+        fields[ 4].setText(client.getZIP());
+        fields[ 5].setText(client.getCity());
+        fields[ 6].setText(client.getCountry());
+        fields[ 7].setText(client.getEmail()); 
+        fields[ 8].setText(client.getPhone()); 
+        fields[ 9].setText(client.getPhone2());
+        fields[10].setText(client.getFax());   
+        fields[11].setText(client.getSubscript());
+        fields[12].setText(client.getOtherContact());
+        fields[13].setText(client.getSome());  
+        fields[14].setText(client.getLanguage());
+        fields[15].setText(client.getComments());
+        fields[16].setText(client.getNationality());
+        fields[17].setText(client.getPassportNo());
+        fields[18].setText(client.getDateOfBirt());
+        fields[19].setText(client.getSocialSecNo());
+        fields[20].setText(client.getAccount());
+        fields[21].setText(client.getLoyality());
+        fields[22].setText(client.getTitle()); 
+
+        
+        
+        
+    }
+
+    /**
+     * Show client in modal controller
+     * @param modalityStage where to show
+     * @param client - client to show
+     * @return new stage with resources
+     */
+    public static Client askClient(Stage modalityStage, Client client) {
+        
+        return ModalController.showModal(ClientCardGUIController.class.getResource("ClientCardView.fxml"), 
+                "Client Card",  modalityStage, client, null);
+        
+        
+    }
+    
+    
+    
+}

@@ -1,0 +1,314 @@
+package bookings;
+
+import java.io.PrintStream;
+
+import fi.jyu.mit.ohj2.Mjonot;
+
+import static database.DataGenerate.*;
+
+
+/**
+ * Does not know  Bases or UserInterface             
+ * Can be modified                                   
+ * Know all clients     columns                      
+ * Can check and spell inputs                        
+ * Can deliver information to ClientsBase class 
+ * @author Konsta Sakharovskiy 
+ * @version Mar 1, 2019
+ *
+ */
+public class Client {
+
+    private int registerNo; // maintain registration number
+    private static int nextNo = 1; //keeps pass-through reg number
+    
+    /// Name and address variables
+    private String     title          = "";
+    private String     name           = "";
+    private String     surname        = "";
+    private String     street         = "";
+    private String     street2        = "";
+    private String     zip            = "";   
+    private String     city           = "";
+    private String     country        = "";
+    
+    /// Contact variables
+    private String     email          = "";
+    private String     phone          = "";
+    private String     phone2         = "";
+    private String     fax            = "";
+    private boolean    subscript          ;
+    private String     otherContact   = "";
+    private String     some           = "";
+    private String     language       = "";
+    private String     comments       = "";
+    
+    /// id and other datails variables
+    private String     nationality    = "";
+    private String     passportNo     = "";
+    private String     dateOfBirth    = "";
+    private String     socialSecNo    = "";
+    private String     account        = "";
+    private boolean    loyality           ;
+     
+    /**
+     * Main used to test the class
+     * @param args not in use
+     */
+    public static void main(String args[]) {
+        
+
+        Client donald = new Client(), kim = new Client();
+        
+        donald.register();
+        kim.register();
+
+        
+        donald.printing(System.out);
+
+        donald.autogenerateContent();
+        donald.printing(System.out);
+        
+        
+        kim.printing(System.out);
+        kim.autogenerateContent();
+        kim.printing(System.out);
+        
+        Client client = new Client();
+        client.parse("0|Mrs.|Trolland|Dump|1600 Pennsylvania Ave|Oval Office|20500|DC|USA|dump@thewhitehouse.gov|+1234|+9876|0101010|true||facebook.com||gluten free breakfast|Citizen Of The World|7777|1938-03-05|||false");
+        System.out.println(client.toString());
+        
+        
+    }
+
+    /**
+     * fill dump info 
+     */
+    public void autogenerateContent() {
+        
+        title = generateGender();
+        name = "Kostosiki";
+        surname = "Memasiki";
+        dateOfBirth = generateDate();
+        street = "nklsfnlkf";
+        street2 = "Oaskcnaklscnle";
+        zip = "11111";
+        city = "NNMM";
+        country = "USA";
+        email = "dump@thewhitehouse.gov";
+        phone = "+1234";
+        phone2 = "+9876";
+        fax = "0101010";
+        //subscript = generateLogic(); test boolean parcing
+        some = "facebook.com";
+        comments = "gluten free breakfast";
+        nationality = "Citizen Of The World";
+        passportNo = "7777";
+        //loyality = generateLogic(); test boolean parcing
+        
+    }
+
+
+       
+    /**
+     * Assign a uniqe number to the client.
+     * @return new number
+     * @example
+     * <pre name="test">
+     *   Client kim = new Client();
+     *   kim.getRegisterNro() === 0;
+     *   kim.register();
+     *   Client chen = new Client();
+     *   chen.register();
+     *   int n1 = kim.getRegisterNro();
+     *   int n2 = chen.getRegisterNro();
+     *   n1 === n2-1;
+     * </pre>
+     */
+     public int register() {
+        registerNo = nextNo;
+        nextNo ++;
+        return registerNo;
+        
+    }
+     
+     /**
+     * @return clients number
+     */
+    public int getRegisterNro() {
+         return registerNo;
+     }
+    
+    /**
+    * @return clients name
+    */
+   public String getName() {
+        return name + " " + surname;
+    }    
+    
+   
+   
+   
+    
+    /**
+     * @param out print info
+     */
+    public void printing(PrintStream out){
+        out.println(String.format("%03d", registerNo) + " " + " " + title + " " 
+                + name + " " + surname + " " + dateOfBirth);
+        out.println(" " + street + " " + street2 + " " + zip + " " + city
+                + " " + country + " " + language);
+        out.println("  email: " + email +
+                "  main phone: " + phone +
+                " second phone: " + phone2 +
+                " fax: " + fax + " " + otherContact);
+        out.println("" + subscript + " " + " " + some + " " + " " + comments );
+        out.println("   Nationality: " + nationality + " " + passportNo + " "  + 
+                 " " + socialSecNo + " " + account + " " + loyality );
+        
+    }
+    
+    /*
+     * Set register number when parsing
+     * and check if it's bigger than next biggest
+     */
+    private void setRegisterNro(int nr) {
+        registerNo = nr;
+        if (registerNo >= nextNo) nextNo = registerNo + 1;
+    }
+    
+    
+    @Override
+    public String toString() {
+        return "" +
+                getRegisterNro() + "|" +
+                title + "|" +
+                name + "|" +
+                surname + "|" +
+                street + "|" +
+                street2 + "|" +
+                zip + "|" +
+                city + "|" +
+                country + "|" +
+                email + "|" +
+                phone + "|" +
+                phone2 + "|" +
+                fax + "|" +
+                subscript + "|" +
+                otherContact + "|" +
+                some + "|" +
+                language + "|" +
+                comments + "|" +
+                nationality + "|" +
+                passportNo + "|" +
+                dateOfBirth + "|" +
+                socialSecNo + "|" +
+                account + "|" +
+                loyality;
+                        
+    }
+    
+    /**
+     * Parse data from string separated by "|"
+     * @param line string line to parse
+     * @example
+     * <pre name="test">
+     *   Client client = new Client();
+     *   client.parse(" 1 |Mr.|Donald| Trump|||||||||||||||||||");
+     *   client.getRegisterNro() === 1;
+     *   client.toString().startsWith("1|Mr.|Donald|Trump||||||||||false||||||||||false") === true; 
+     *
+     *   client.register();
+     *   int n = client.getRegisterNro();
+     *   client.parse(""+(n+20));      
+     *   client.register();          
+     *   client.getRegisterNro() === n+20+1;
+     *     
+     * </pre>
+     */
+    public void parse(String line) {
+        StringBuffer sb = new StringBuffer(line);
+        setRegisterNro(Mjonot.erota(sb, '|', getRegisterNro()));
+        title = Mjonot.erota(sb, '|', title);
+        name = Mjonot.erota(sb, '|', name);
+        surname = Mjonot.erota(sb, '|', surname);
+        street = Mjonot.erota(sb, '|', street);
+        street2 = Mjonot.erota(sb, '|', street2);
+        zip = Mjonot.erota(sb, '|', zip);
+        city = Mjonot.erota(sb, '|', city);
+        country = Mjonot.erota(sb, '|', country);
+        email = Mjonot.erota(sb, '|', email);
+        phone = Mjonot.erota(sb, '|', phone);
+        phone2 = Mjonot.erota(sb, '|', phone2);
+        fax = Mjonot.erota(sb, '|', fax);
+        subscript = Boolean.parseBoolean(Mjonot.erota(sb, '|', subscript));
+        otherContact = Mjonot.erota(sb, '|', otherContact);
+        some = Mjonot.erota(sb, '|', some);
+        language = Mjonot.erota(sb, '|', language);
+        comments = Mjonot.erota(sb, '|', comments);
+        nationality = Mjonot.erota(sb, '|', nationality);
+        passportNo = Mjonot.erota(sb, '|', passportNo);
+        dateOfBirth = Mjonot.erota(sb, '|', dateOfBirth);
+        socialSecNo = Mjonot.erota(sb, '|', socialSecNo);
+        account = Mjonot.erota(sb, '|', account);
+        loyality = Boolean.parseBoolean(Mjonot.erota(sb, '|', loyality));
+        
+    }
+    
+    
+    @Override
+    public boolean equals(Object client) {
+        if ( client == null ) return false;
+        return this.toString().equals(client.toString());
+    }
+    
+    
+    @Override
+    public int hashCode() {
+        return registerNo;
+    }
+
+    /**
+     * @return Surname
+     */
+    public String getSurame() {
+        
+        return surname;
+    }
+    
+    /**
+     * @return Street
+     */
+    public String getStreet() {
+        
+        return street;
+    }
+    
+    /**
+     * @return Street2
+     */
+    public String getStreet2() {
+        
+        return street2;
+    }
+    
+    /**
+     * @return ZIP
+     */
+    public String getZIP() {
+        
+        return zip;
+    }
+    
+    /**
+     * @return Cyty
+     */
+    public String getCity() {
+        
+        return city;
+    }
+
+
+    
+   
+}

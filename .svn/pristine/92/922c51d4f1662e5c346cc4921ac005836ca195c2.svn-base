@@ -1,0 +1,220 @@
+package bookings;
+
+import java.util.List;
+
+/**
+ * Handle ReservationBase, ClientBase, RoomsBase   
+ * classes mutual communication and deliver          
+ * information on request 
+ * reads and writes to the data to program bases   
+ * @author Konsta Sakharovskiy 
+ * @version Mar 5, 2019 adding reservations
+ *
+ */
+public class CalendarView {
+    
+    private ClientsBase clients = new ClientsBase();
+    private ReservationsBase reservations = new ReservationsBase();
+    private RoomsBase rooms = new RoomsBase();
+    
+    
+    
+    /**
+     * return the client on index i of array
+     * @param i place in members array
+     * @return client from members array at position i
+     * @throws IndexOutOfBoundsException Exception if number is out
+     */
+    public Client giveClient(int i) throws IndexOutOfBoundsException{
+        return clients.give(i);
+    }
+    
+    /**
+     * Search all clients reservations
+     * @param client client's object
+     * @return list of reservations
+     *  * @example
+     * <pre name="test">
+     * #import java.util.*;
+     * 
+     *  CalendarView cv = new CalendarView();
+     *  Client test1 = new Client(), test2 = new Client(), test3 = new Client();
+     *  test1.register(); test2.register(); test3.register();
+     *  int id1 = test1.getRegisterNro();
+     *  int id2 = test2.getRegisterNro();
+     *  Reservation res1 = new Reservation(id1); cv.add(res1);
+     *  Reservation res2 = new Reservation(id1); cv.add(res2);
+     *  Reservation res3 = new Reservation(id2); cv.add(res3);
+     *  Reservation res4 = new Reservation(id2); cv.add(res4);
+     *  Reservation res5 = new Reservation(id2); cv.add(res5);
+     *  
+     *  List<Reservation> found;
+     *  found = cv.giveReservations(test3);
+     *  found.size() === 0; 
+     *  found = cv.giveReservations(test1);
+     *  found.size() === 2; 
+     *  found.get(0) == res1 === true;
+     *  found.get(1) == res2 === true;
+     *  found = cv.giveReservations(test2);
+     *  found.size() === 3; 
+     *  found.get(0) == res3 === true;
+     * </pre> 
+     */
+    public List<Reservation> giveReservations(Client client) {
+        return reservations.giveReservations(client.getRegisterNro());
+    }
+    
+    /**
+     * Search all reservation's rooms
+     * @param reservation reservation's object
+     * @return list of rooms
+     */
+    public List<Room> giveRooms(Reservation reservation) {
+        return rooms.giveRooms(reservation.getReservationNo());
+    }
+    
+    
+    /**
+     * @param client adding client to members array
+     * @throws Exception if members is full
+     * <pre name="test">
+     * #THROWS Exception
+     * CalendarView clients = new CalendarView();
+     * Client ronald = new Client(), george = new Client();
+     * clients.getClients() === 0;
+     * clients.add(ronald); clients.getClients() === 1;
+     * clients.add(george); clients.getClients() === 2;
+     * clients.add(ronald); clients.getClients() === 3;
+     * clients.giveClient(0) === ronald;
+     * clients.giveClient(1) === george;
+     * clients.giveClient(2) === ronald;
+     * clients.giveClient(1) == ronald === false;
+     * clients.giveClient(1) == george === true;
+     * clients.giveClient(3) === ronald; #THROWS IndexOutOfBoundsException
+     * clients.add(ronald); clients.getClients() === 4;
+     * clients.add(ronald); clients.getClients() === 5;
+     * </pre>
+     */
+    public void add(Client client) throws Exception {
+        clients.add(client);
+    }
+    
+    /**
+     * add reservation to reservations list
+     * @param reservation reservation to add
+     */
+    public void add(Reservation reservation) {
+        reservations.add(reservation);
+    }
+    
+    /**
+     * add room to rooms list
+     * @param room - room to add
+     */
+    public void add(Room room) {
+        rooms.add(room);
+    }
+    
+    
+    /**
+     * @return clients quantity
+     */
+    public int getClients() {
+        return clients.getQnt();
+    }
+    
+    /**
+     * @return resrvations quantity
+     */
+    public int getReservations() {
+        return reservations.getQnt();
+    }
+    
+    
+    /**
+     * main method for test purposes
+     * @param args not in use
+     */
+    public static void main(String[] args) {
+        CalendarView testBase = new CalendarView();
+        
+        Client donald = new Client(), kim = new Client();       
+        donald.register();
+        kim.register();               
+        donald.autogenerateContent();
+        kim.autogenerateContent();
+        
+        
+        try {
+            testBase.add(kim);
+            testBase.add(donald);
+            
+            int kimId = kim.getRegisterNro();
+            int donaldId = donald.getRegisterNro();
+            
+            Room rm1 = new Room(), rm2 = new Room(), rm3 = new Room();
+            Room rm4 = new Room(), rm5 = new Room(), rm6 = new Room();
+            rm1.register(); rm2.register(); rm3.register();
+            rm4.register(); rm5.register(); rm6.register();
+
+            
+            Reservation test1 = new Reservation(kimId); 
+            test1.assignReservation(kimId);
+            test1.register();
+            testBase.add(test1);
+            int test1id = test1.getReservationNo();
+            rm1.assignRoom(test1id); rm2.assignRoom(test1id);
+            testBase.add(rm1); testBase.add(rm2);
+            
+            Reservation test2 = new Reservation(kimId); 
+            test2.assignReservation(kimId);
+            test2.register(); 
+            testBase.add(test2);
+            int test2id = test2.getReservationNo();
+            rm3.assignRoom(test2id); rm4.assignRoom(test2id);
+            testBase.add(rm3); testBase.add(rm4);
+            
+            Reservation test3 = new Reservation(donaldId); 
+            test3.assignReservation(donaldId); 
+            test3.register();
+            testBase.add(test3);
+            int test3id = test3.getReservationNo();
+            rm5.assignRoom(test3id); rm6.assignRoom(test3id);
+            testBase.add(rm5); testBase.add(rm6);
+            
+            Reservation test4 = new Reservation(donaldId); 
+            test4.assignReservation(donaldId); 
+            test4.register();
+            testBase.add(test4);
+            
+            Reservation test5 = new Reservation(donaldId); 
+            test5.assignReservation(donaldId); 
+            test5.register();
+            testBase.add(test5);
+
+            
+            for (int i = 0; i < testBase.getClients(); i++) {
+                Client client = testBase.giveClient(i);
+                System.out.println("=======================================");
+                client.printing(System.out);
+                List<Reservation> reservFound = testBase.giveReservations(client);
+                for (Reservation res : reservFound) {
+                    System.out.println("----------------------------------");
+                    res.printing(System.out);
+                    List<Room> roomFound = testBase.giveRooms(res);
+                    for (Room rm : roomFound) {
+                        System.out.println("++++++++++++++++++++++++++++++");
+                        rm.printing(System.out);
+                    }
+                }
+            }          
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+    
+    
+    }
+
+
+}

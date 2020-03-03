@@ -1,0 +1,113 @@
+
+package bookings;
+
+
+import java.io.OutputStream;
+import java.io.PrintStream;
+
+/**
+ * Does not know Reservations, Clients or Bases 
+ * Know and may check type of rooms             
+ * Can be added (no change or deleting)         
+ * Can deliver information to RoomsBase class   
+ * @author Konsta Sakharovskiy 
+ * @version Mar 7, 2019
+ *
+ */
+public class Room {
+    
+    private int reservationNo;
+    private int roomNo;
+    private String roomType = "";
+    
+    private static int nextNo = 1;
+    
+      
+
+    /**
+     * Main used to test the class
+     * @param args not in use
+     */
+    public static void main(String[] args) {
+       
+        Room testRoom1 = new Room();
+        Room testRoom2 = new Room();
+        
+        testRoom1.register();
+        testRoom2.register();
+        
+        testRoom1.assignRoom(1);
+        testRoom2.assignRoom(3);
+        
+        testRoom1.printing(System.out);
+        testRoom2.printing(System.out);
+
+  
+    }
+    
+    /**
+     * initializing room
+     */
+    public Room() {
+        //
+    }
+    
+
+    /**
+     * @return room number
+     */
+    public int register() {
+        roomNo = nextNo;
+        nextNo++;
+        return roomNo;  
+        
+    }
+    
+    /**
+     * initialize adding room to reservations
+     * @param reservationNo reservation's number
+     */
+    public Room (int reservationNo) {
+        this.reservationNo = reservationNo;
+    }
+
+    
+    /**
+     * Use to assign room to reservation 
+     * @param i reservations id number
+     */  
+    public void assignRoom(int i) {
+        reservationNo = i;
+        roomType = "suite";         
+    }
+    
+    /**
+     * @param out print info
+     */
+    public void printing(PrintStream out){
+        out.println("Room number: " + roomNo + " Room type: " + roomType);                
+    }
+    
+    /**
+     * @param os print the data
+     */
+    public void printing(OutputStream os) {       
+        printing(new PrintStream(os));
+    }
+    
+    /**
+     * @return reservation number
+     */
+    public int getReservationNo() {
+        return reservationNo;
+    }
+    
+    /**
+     * @return room number
+     */
+    public int getRoomNo() {
+        return roomNo;
+    }
+       
+
+}

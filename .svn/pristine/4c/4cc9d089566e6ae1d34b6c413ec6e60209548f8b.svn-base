@@ -1,0 +1,112 @@
+
+package bookings;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+
+/**
+ * maintain the actual information about rooms 
+ * add room to reservation  
+ * @author Konsta Sakharovskiy 
+ * @version Mar 8, 2019
+ *
+ */
+public class RoomsBase implements Iterable<Room>  {
+
+    private Collection<Room> rooms = new ArrayList<Room>();
+    
+       
+    /**
+     * main method to test class
+     * @param args not in use
+     */
+    public static void main(String[] args) {
+        
+        RoomsBase rb = new RoomsBase();
+        
+        Room room1 = new Room();
+        Room room2 = new Room();
+        Room room3 = new Room();
+        
+        room1.register();
+        room2.register();
+        room3.register();
+        
+        room1.assignRoom(101);
+        room2.assignRoom(202);
+        room3.assignRoom(101);
+        
+        rb.add(room1);
+        rb.add(room2);
+        rb.add(room3);
+        
+        List<Room> rooms2 = rb.giveRooms(101);
+        
+        for (Room rm : rooms2) {
+            System.out.println("========================================");
+            rm.printing(System.out);
+        }  
+    }
+        
+    /**
+     * add room to rooms list
+     * @param rm room to add
+     */
+    public void add(Room rm) {
+        rooms.add(rm);
+    }
+    
+    /**
+     * @return rooms quantity
+     */
+    public int getQnt() {
+        return rooms.size();
+    }
+    
+    /**
+     * Itarate through all rooms
+     * @return rooms iterator
+     * 
+     * @example
+     * <pre name="test">
+     * #PACKAGEIMPORT
+     * #import java.util.*;
+     * 
+     *  RoomsBase test = new RoomsBase();
+     *  Room res1 = new Room(); test.add(res1);
+     *  Room res2 = new Room(); test.add(res2);
+     *  Room res3 = new Room(); test.add(res3);
+     *  Room res4 = new Room(); test.add(res4);
+     *  Room res5 = new Room(); test.add(res5);
+     * 
+     *  Iterator<Room> testIterator = test.iterator();
+     *  testIterator.next() === res1;
+     *  testIterator.next() === res2;
+     *  testIterator.next() === res3;
+     *  testIterator.next() === res4;
+     *  testIterator.next() === res5;
+     *  testIterator.next() === res1;  #THROWS NoSuchElementException  
+     *  
+     * </pre>
+     */   
+    @Override
+    public Iterator<Room> iterator() {
+        
+        return rooms.iterator();
+    }
+    
+    /**
+     * Search and return rooms by reservation id
+     * @param reservationNo reservation number
+     * @return found rooms in list
+     */
+    public List<Room> giveRooms(int reservationNo) {
+        List<Room> found = new ArrayList<Room>();
+        for (Room rm : rooms)
+            if (rm.getReservationNo() == reservationNo) found.add(rm);
+        return found;
+    }
+
+}

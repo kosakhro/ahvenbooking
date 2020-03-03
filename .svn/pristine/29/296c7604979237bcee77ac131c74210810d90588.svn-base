@@ -1,0 +1,338 @@
+package bookings;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+/**
+ *  maintain the actual information about clients
+ *  add remove and change clients                
+ *  upload and print clients information         
+ *  searching, sorting and filtering
+ * @author Konsta Sakharovskiy 
+ * @version Mar 5, 2019
+ *
+ */
+public class ClientsBase implements Iterable<Client> {
+
+    
+    private static final int MEMBERS_LIMIT   = 8;
+    private int              qnt             = 0;
+    private String           fullName        = "";
+    private String           dataBaseName    = "";
+    private Client           clients[]       = new Client[MEMBERS_LIMIT];
+    
+   
+    
+    /**
+     * main method for testing purposes
+     * @param args not in use
+     */
+    public static void main(String[] args) {
+        ClientsBase testing = new ClientsBase();
+        
+        Client donald = new Client(), kim = new Client();
+        
+        donald.register();
+        kim.register();
+                
+        donald.autogenerateContent();
+        kim.autogenerateContent();
+        
+        
+        try {
+            testing.add(kim);
+            testing.add(donald);
+
+            
+            for (int i = 0; i < testing.getQnt(); i++) {
+                Client client = testing.give(i);
+                System.out.println("=======================================");
+                client.printing(System.out);
+            }
+            
+                        
+            
+        } catch (HoldException e) {
+            e.printStackTrace();
+        }
+       
+    }
+    
+    /**
+     * initial
+     */
+    public ClientsBase(){
+        //
+    }
+        
+    /**
+     * @param client adding client to clients array
+     * @throws HoldException if clients array is full
+     * <pre name="test">
+     * #THROWS HoldException
+     * ClientsBase clients = new ClientsBase();
+     * Client ronald = new Client(), george = new Client();
+     * clients.getQnt() === 0;
+     * clients.add(ronald); clients.getQnt() === 1;
+     * clients.add(george); clients.getQnt() === 2;
+     * clients.add(ronald); clients.getQnt() === 3;
+     * clients.give(0) === ronald;
+     * clients.give(1) === george;
+     * clients.give(2) === ronald;
+     * clients.give(1) == ronald === false;
+     * clients.give(1) == george === true;
+     * clients.give(3) === ronald; #THROWS IndexOutOfBoundsException
+     * clients.add(ronald); clients.getQnt() === 4;
+     * clients.add(ronald); clients.getQnt() === 5;
+     * clients.add(ronald); clients.getQnt() === 6;
+     * clients.add(ronald); clients.getQnt() === 7;
+     * clients.add(ronald); clients.getQnt() === 8;
+     * clients.add(ronald); // #THROWS HoldException upscaled v.6
+     * </pre>
+     */
+    public void add(Client client) throws HoldException {
+        if (qnt >= clients.length) {
+            clients = Arrays.copyOf(clients, clients.length + 42);
+        }
+        clients[qnt++] = client;
+    }
+
+    
+    /**
+     * return the client on index i of array
+     * @param i place in clients array
+     * @return client from clients array at position i
+     * @throws IndexOutOfBoundsException Exception if number is out
+     */
+    public Client give(int i) throws IndexOutOfBoundsException {
+        if (i < 0 || qnt <= i)
+            throw new IndexOutOfBoundsException("Unacceptable position: " + i);
+        return clients[i];
+    }
+    
+    
+    /**
+     * @return clients quantity
+     */
+    public int getQnt() {
+        return this.qnt;
+    }
+
+    @Override
+    public Iterator<Client> iterator() {
+        return new ClientsIterator();
+    }
+    
+  
+    
+    /**
+     * Class to make ClientsBase iteration
+     * @author Konsta Sakharovskiy 
+     * @version Mar 21, 2019
+     *
+     */
+    public class ClientsIterator implements Iterator<Client>{
+        private int point = 0;
+        
+        @Override
+        public boolean hasNext() {
+            return (point < getQnt());
+        }
+        
+        @Override
+        public Client next() throws NoSuchElementException {
+            if ( !hasNext() )throw new NoSuchElementException ("not exist");
+            return give(point++);
+        }
+        
+        @Override
+        public void remove() throws UnsupportedOperationException {
+            throw new UnsupportedOperationException("can't delete");
+        }
+        
+        
+    }
+    
+    /**
+     * Read clients  data from database
+     * @param databaseName name of database
+     * @throws HoldException exception if reading problems occur
+     */
+    public void readData(String databaseName) throws HoldException {
+        setDataBaseName(databaseName);
+        try ( BufferedReader fi = new BufferedReader(new FileReader(getDataName())) ) {
+            fullName = fi.readLine();
+            if ( fullName == null ) throw new HoldException("missed name");
+            String line = fi.readLine();
+            if ( line == null ) throw new HoldException("miss the size");
+
+
+            while ( (line = fi.readLine()) != null ) {
+                line = line.trim();
+                if ( "".equals(line) || line.charAt(0) == ';' ) continue;
+                Client client = new Client();
+                client.parse(line);
+                add(client);
+            }
+        } catch ( FileNotFoundException e ) {
+            throw new HoldException("Can't open " + getDataName());
+        } catch ( IOException e ) {
+            throw new HoldException("probblemm: " + e.getMessage());
+        }
+    }
+    
+    
+    /**
+     * Read from a previously named file
+     * @throws HoldException exception if reading problems occur
+     */
+    public void readData() throws HoldException {
+        readData(getDataBaseName());
+    }
+    
+    /**
+     * Save clients data to database
+     * @throws HoldException if saving problem occurs
+     * @example
+     * <pre name="test">
+     * #THROWS HoldException 
+     * #import java.io.File;
+     * #import java.util.Iterator;
+     * 
+     *  ClientsBase clients = new ClientsBase();
+     *  Client bill = new Client(), ronald = new Client();
+     *  bill.autogenerateContent();
+     *  ronald.autogenerateContent();
+     *  String folder = "testings";
+     *  String databaseName = folder+"/clients";
+     *  File dir = new File(folder);
+     *  dir.mkdir();
+     *  
+     *  clients.readData(databaseName); #THROWS HoldException
+     *  clients.add(bill);
+     *  clients.add(ronald); 
+     *  Iterator<Client> i = clients.iterator();
+     *  i.next() === bill;
+     *  i.next() === ronald;
+     *  i.hasNext() === false;
+     *  clients.saveData();
+     *  
+     *  clients = new ClientsBase(); 
+     *  clients.readData(databaseName);
+     *  Iterator<Client> u = clients.iterator();
+     *  u.next() === bill;
+     *  u.next() === ronald;
+     *  u.hasNext() === false;    
+     *  clients.add(ronald);
+     *  clients.saveData();
+     *  File bakOver = new File(databaseName+".bak");
+     *  bakOver.delete() === true;
+     *  File datOver = new File(databaseName+".dat");
+     *  datOver.delete() === true;
+     * </pre>
+     */
+    public void saveData() throws HoldException {
+        File fbak = new File(getBakName());
+        File ftied = new File(getDataName());
+        fbak.delete(); 
+        ftied.renameTo(fbak); 
+
+        try ( PrintWriter fo = new PrintWriter(new FileWriter(ftied.getCanonicalPath())) ) {
+            fo.println(getFullName());
+            fo.println(clients.length);
+            for (Client client : this) {
+                fo.println(client.toString());
+            }
+        } catch ( FileNotFoundException ex ) {
+            throw new HoldException("Database " + ftied.getName() + " can't open");
+        } catch ( IOException ex ) {
+            throw new HoldException("Database " + ftied.getName() + " writing problem");
+        }
+
+    }
+    
+    
+    /**
+     * return collection clients searched by condition
+     * @param condition search string
+     * @param i position
+     * @return selected clients in collection
+     */
+    @SuppressWarnings("unused")
+    public Collection<Client> search(String condition, int i){
+        Collection<Client> found = new ArrayList<Client>();
+        for  (Client client : this) {
+            found.add(client);
+        }
+        return found;
+    }
+    
+    
+    
+    
+    /**
+     * getting database backup name
+     * @return database backup name
+     */
+    public String getBakName() {
+        return dataBaseName + ".bak";
+    }
+    
+    /**
+     * getting database dat name
+     * @return database dat name
+     */
+    public String getDataName() {
+        return getDataBaseName() + ".dat";
+    }
+    
+    /**
+     * setting database name
+     * @param name database name
+     */
+    public void setDataBaseName(String name) {
+        dataBaseName = name;
+    }
+    
+    /**
+     * getting database name
+     * @return database name
+     */
+    public String getDataBaseName() {
+        return dataBaseName;
+    }
+    
+    /**
+     * getting database full name
+     * @return full name
+     */
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void replaceOrAddClient(Client client) throws HoldException {
+        int id = client.getRegisterNro();
+        for (int i = 0; i < qnt; i++) {
+            if (clients[i].getRegisterNro() == id) {
+                clients[i] = client;
+                return;
+            }
+        }
+        add(client);
+        
+        
+    }
+    
+    
+
+}

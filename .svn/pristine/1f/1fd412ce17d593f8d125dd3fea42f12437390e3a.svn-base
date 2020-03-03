@@ -1,0 +1,325 @@
+package bookings;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+/**
+ *  maintain the actual information about clients
+ *  add remove and change clients                
+ *  upload and print clients information         
+ *  searching, sorting and filtering
+ * @author Konsta Sakharovskiy 
+ * @version Mar 5, 2019
+ *
+ */
+public class ClientsBase implements Iterable<Client> {
+
+    
+    private static final int MEMBERS_LIMIT   = 8;
+    private int              qnt             = 0;
+    private String           fullName        = "";
+    private String           dataBaseName    = "";
+    private Client           clients[]       = new Client[MEMBERS_LIMIT];
+    
+   
+    
+    /**
+     * main method for testing purposes
+     * @param args not in use
+     */
+    public static void main(String[] args) {
+        ClientsBase testing = new ClientsBase();
+        
+        Client donald = new Client(), kim = new Client();
+        
+        donald.register();
+        kim.register();
+                
+        donald.autogenerateContent();
+        kim.autogenerateContent();
+        
+        
+        try {
+            testing.add(kim);
+            testing.add(donald);
+
+            
+            for (int i = 0; i < testing.getQnt(); i++) {
+                Client client = testing.give(i);
+                System.out.println("=======================================");
+                client.printing(System.out);
+            }
+            
+                        
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+       
+    }
+    
+    /**
+     * initial
+     */
+    public ClientsBase(){
+        //
+    }
+        
+    /**
+     * @param client adding client to clients array
+     * @throws Exception if clients array is full
+     * <pre name="test">
+     * #THROWS Exception
+     * ClientsBase clients = new ClientsBase();
+     * Client ronald = new Client(), george = new Client();
+     * clients.getQnt() === 0;
+     * clients.add(ronald); clients.getQnt() === 1;
+     * clients.add(george); clients.getQnt() === 2;
+     * clients.add(ronald); clients.getQnt() === 3;
+     * clients.give(0) === ronald;
+     * clients.give(1) === george;
+     * clients.give(2) === ronald;
+     * clients.give(1) == ronald === false;
+     * clients.give(1) == george === true;
+     * clients.give(3) === ronald; #THROWS IndexOutOfBoundsException
+     * clients.add(ronald); clients.getQnt() === 4;
+     * clients.add(ronald); clients.getQnt() === 5;
+     * clients.add(ronald); clients.getQnt() === 6;
+     * clients.add(ronald); clients.getQnt() === 7;
+     * clients.add(ronald); clients.getQnt() === 8;
+     * clients.add(ronald);  #THROWS Exception
+     * </pre>
+     */
+    public void add(Client client) throws Exception {
+        if (qnt >= clients.length) throw new Exception("The base is too large");
+        clients[qnt] = client;
+        qnt++;
+    }
+
+    
+    /**
+     * return the client on index i of array
+     * @param i place in clients array
+     * @return client from clients array at position i
+     * @throws IndexOutOfBoundsException Exception if number is out
+     */
+    public Client give(int i) throws IndexOutOfBoundsException {
+        if (i < 0 || qnt <= i)
+            throw new IndexOutOfBoundsException("Unacceptable position: " + i);
+        return clients[i];
+    }
+    
+    
+    /**
+     * @return clients quantity
+     */
+    public int getQnt() {
+        return this.qnt;
+    }
+
+    @Override
+    public Iterator<Client> iterator() {
+        return new ClientsIterator();
+    }
+    
+  
+    
+    /**
+     * Class to make ClientsBase iteration
+     * @author Konsta Sakharovskiy 
+     * @version Mar 21, 2019
+     *
+     */
+    public class ClientsIterator implements Iterator<Client>{
+        private int point = 0;
+        
+        @Override
+        public boolean hasNext() {
+            return (point < getQnt());
+        }
+        
+        @Override
+        public Client next() throws NoSuchElementException {
+            if ( !hasNext() )throw new NoSuchElementException ("not exist");
+            return give(point++);
+        }
+        
+        @Override
+        public void remove() throws UnsupportedOperationException {
+            throw new UnsupportedOperationException("can't delete");
+        }
+        
+        
+    }
+    
+    /**
+     * Read clients  data from database
+     * @param databaseName name of database
+     * @throws Exception exception if reading problems occur
+     * @example
+     * <pre name="test">
+     * #THROWS Exception 
+     * #import java.io.File;
+     * #import java.util.Iterator;
+     * 
+     *  ClientsBase clients = new ClientsBase();
+     *  Client aku1 = new Client(), aku2 = new Client();
+     *  aku1.autogenerateContent();
+     *  aku2.autogenerateContent();
+     *  String hakemisto = "testikelmit";
+     *  String tiedNimi = hakemisto+"/nimet";
+     *  File ftied = new File(tiedNimi+".dat");
+     *  File dir = new File(hakemisto);
+     *  dir.mkdir();
+     *  ftied.delete();
+     *  
+     *  clients.readData(tiedNimi); #THROWS Exception
+     *  clients.add(aku1);
+     *  clients.add(aku2); 
+     *  Iterator<Client> i = clients.iterator();
+     *  i.next() === aku1;
+     *  i.next() === aku2;
+     *  i.hasNext() === false;
+     *  clients.saveData();
+     *  
+     *  clients = new ClientsBase(); 
+     *  clients.readData(tiedNimi);
+     *  Iterator<Client> u = clients.iterator();
+     *  u.next() === aku1;
+     *  u.next() === aku2;
+     *  u.hasNext() === false;    
+     *  clients.add(aku2);
+     *  clients.saveData();
+     *  //ftied.delete() === true;
+     *  //File fbak = new File(tiedNimi+".bak");
+     *  //fbak.delete() === true;
+     *  //dir.delete() === true;
+     * </pre>
+     */
+    public void readData(String databaseName) throws Exception {
+        setDataBaseName(databaseName);
+        try ( BufferedReader fi = new BufferedReader(new FileReader(getDataName())) ) {
+            fullName = fi.readLine();
+            if ( fullName == null ) throw new Exception("missed name");
+            String line = fi.readLine();
+            if ( line == null ) throw new Exception("miss the size");
+
+
+            while ( (line = fi.readLine()) != null ) {
+                line = line.trim();
+                if ( "".equals(line) || line.charAt(0) == ';' ) continue;
+                Client client = new Client();
+                client.parse(line);
+                add(client);
+            }
+        } catch ( FileNotFoundException e ) {
+            throw new Exception("Can't open " + getDataName());
+        } catch ( IOException e ) {
+            throw new Exception("probblemm: " + e.getMessage());
+        }
+    }
+    
+    
+    /**
+     * Read from a previously named file
+     * @throws Exception exception if reading problems occur
+     */
+    public void readData() throws Exception {
+        readData(getDataBaseName());
+    }
+    
+    /**
+     * Save clients data to database
+     * @throws Exception if saving problem occurs
+     */
+    public void saveData() throws Exception {
+        File fbak = new File(getBakName());
+        File ftied = new File(getDataName());
+        fbak.delete(); 
+        ftied.renameTo(fbak); 
+
+        try ( PrintWriter fo = new PrintWriter(new FileWriter(ftied.getCanonicalPath())) ) {
+            fo.println(getFullName());
+            fo.println(clients.length);
+            for (Client client : this) {
+                fo.println(client.toString());
+            }
+        } catch ( FileNotFoundException ex ) {
+            throw new Exception("Database " + ftied.getName() + " can't open");
+        } catch ( IOException ex ) {
+            throw new Exception("Database " + ftied.getName() + " writing problem");
+        }
+
+    }
+    
+    
+    /**
+     * return collection clients searched by condition
+     * @param condition search string
+     * @param i position
+     * @return selected clients in collection
+     */
+    @SuppressWarnings("unused")
+    public Collection<Client> search(String condition, int i){
+        Collection<Client> found = new ArrayList<Client>();
+        for  (Client client : this) {
+            found.add(client);
+        }
+        return found;
+    }
+    
+    
+    
+    
+    /**
+     * getting database backup name
+     * @return database backup name
+     */
+    public String getBakName() {
+        return dataBaseName + ".bak";
+    }
+    
+    /**
+     * getting database dat name
+     * @return database dat name
+     */
+    public String getDataName() {
+        return getDataBaseName() + ".dat";
+    }
+    
+    /**
+     * setting database name
+     * @param name database name
+     */
+    public void setDataBaseName(String name) {
+        dataBaseName = name;
+    }
+    
+    /**
+     * getting database name
+     * @return database name
+     */
+    public String getDataBaseName() {
+        return dataBaseName;
+    }
+    
+    /**
+     * getting database full name
+     * @return full name
+     */
+    public String getFullName() {
+        return fullName;
+    }
+    
+    
+
+}

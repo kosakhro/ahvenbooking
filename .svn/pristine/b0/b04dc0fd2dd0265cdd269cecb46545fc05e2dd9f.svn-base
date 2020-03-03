@@ -1,0 +1,93 @@
+package bookings;
+
+/**
+ *  - Handle ReservationBase, ClientBase, RoomsBase   
+ * classes mutual communication and deliver          
+ * information on request 
+ * - reads and writes to the data to program bases   
+ * @author Konsta Sakharovskiy 
+ * @version Mar 5, 2019
+ *
+ */
+public class CalendarView {
+    
+    private ClientsBase clients = new ClientsBase();
+    
+    
+    /**
+     * return the client on index i of array
+     * @param i place in members array
+     * @return client from members array at position i
+     * @throws IndexOutOfBoundsException Exception if number is out
+     */
+    public Client giveClient(int i) throws IndexOutOfBoundsException{
+        return clients.give(i);
+    }
+    
+    /**
+     * @param client adding client to members array
+     * @throws Exception if members is full
+     * <pre name="test">
+     * #THROWS Exception
+     * CalendarView clients = new CalendarView();
+     * Client ronald = new Client(), george = new Client();
+     * clients.getClients() === 0;
+     * clients.add(ronald); clients.getClients() === 1;
+     * clients.add(george); clients.getClients() === 2;
+     * clients.add(ronald); clients.getClients() === 3;
+     * clients.giveClient(0) === ronald;
+     * clients.giveClient(1) === george;
+     * clients.giveClient(2) === ronald;
+     * clients.giveClient(1) == ronald === false;
+     * clients.giveClient(1) == george === true;
+     * clients.giveClient(3) === ronald; #THROWS IndexOutOfBoundsException
+     * clients.add(ronald); clients.getClients() === 4;
+     * clients.add(ronald); clients.getClients() === 5;
+     * clients.add(ronald);  #THROWS Exception
+     * </pre>
+     */
+    public void add(Client client) throws Exception {
+        clients.add(client);
+    }
+    
+    /**
+     * @return clients quantity
+     */
+    public int getClients() {
+        return clients.getQnt();
+    }
+    
+    /**
+     * main method for test purposes
+     * @param args not in use
+     */
+    public static void main(String[] args) {
+        CalendarView testBase = new CalendarView();
+        
+        Client donald = new Client(), kim = new Client();       
+        donald.register();
+        kim.register();               
+        donald.autogenerateContent();
+        kim.autogenerateContent();
+        
+        
+        try {
+            testBase.add(kim);
+            testBase.add(donald);
+
+            
+            for (int i = 0; i < testBase.getClients(); i++) {
+                Client client = testBase.giveClient(i);
+                System.out.println("=======================================");
+                client.printing(System.out);
+            }          
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+    
+    
+    }
+
+
+}

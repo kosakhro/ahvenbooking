@@ -1,0 +1,155 @@
+package bookings;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+
+/**
+ * @author Konsta Sakharovskiy 
+ * @version Mar 8, 2019
+ *
+ */
+public class ReservationsBase implements Iterable<Reservation> {
+    
+    
+    private Collection<Reservation> reservations = new ArrayList<Reservation>();    
+
+    /**
+     * @param args not in use
+     */
+    public static void main(String[] args) {
+        
+        ReservationsBase resbase = new ReservationsBase();
+        
+        Reservation testingRes1 = new Reservation();
+        Reservation testingRes2 = new Reservation();
+        Reservation testingRes3 = new Reservation();
+        
+        testingRes1.assignReservation(222);
+        testingRes2.assignReservation(333);
+        testingRes3.assignReservation(444);
+        
+        testingRes1.register();
+        testingRes2.register();
+        testingRes3.register();
+        
+        resbase.add(testingRes1);
+        resbase.add(testingRes2);
+        resbase.add(testingRes3);
+        
+        
+        
+        List<Reservation> reservations2 = resbase.giveReservations(444);
+        
+        for (Reservation res : reservations2) {
+            System.out.println("========================================");
+            res.printing(System.out);
+        }
+        
+   
+    }
+    
+    /**
+     * initialize reservations base
+     */
+    public ReservationsBase() {
+        // access method
+    }
+    
+    /**
+     * add reservation to reservations list
+     * @param res reservaton to add
+     */
+    public void add(Reservation res) {
+        reservations.add(res);
+    }
+    
+    
+    /**
+     * @return reservations quantity
+     */
+    public int getQnt() {
+        return reservations.size();
+    }
+    
+
+    
+    /**
+     * Itarate through all reservations
+     * @return reservation iterator
+     * 
+     * @example
+     * <pre name="test">
+     * #PACKAGEIMPORT
+     * #import java.util.*;
+     * 
+     *  ReservationsBase test = new ReservationsBase();
+     *  Reservation res1 = new Reservation(2); test.add(res1);
+     *  Reservation res2 = new Reservation(1); test.add(res2);
+     *  Reservation res3 = new Reservation(2); test.add(res3);
+     *  Reservation res4 = new Reservation(1); test.add(res4);
+     *  Reservation res5 = new Reservation(2); test.add(res5);
+     * 
+     *  Iterator<Reservation> testIterator = test.iterator();
+     *  testIterator.next() === res1;
+     *  testIterator.next() === res2;
+     *  testIterator.next() === res3;
+     *  testIterator.next() === res4;
+     *  testIterator.next() === res5;
+     *  testIterator.next() === res1;  #THROWS NoSuchElementException  
+     *  
+     *  int n = 0;
+     *  int jnrot[] = {2,1,2,1,2};
+     *  
+     *  for ( Reservation res : test ) { 
+     *    res.getClientsNo() === jnrot[n]; n++;  
+     *  }
+     *  
+     *  n === 5;
+     *  
+     * </pre>
+     */ 
+    @Override
+    public Iterator<Reservation> iterator() {
+
+        return reservations.iterator();
+    }
+    
+    
+    /**
+     * Search and return reservations by client's id
+     * @param clientsNo clients id
+     * @return found reservations in list
+     ** @example
+     * <pre name="test">
+     * #import java.util.*;
+     *  ReservationsBase test = new ReservationsBase();
+     *  Reservation res1 = new Reservation(2); test.add(res1);
+     *  Reservation res2 = new Reservation(1); test.add(res2);
+     *  Reservation res3 = new Reservation(2); test.add(res3);
+     *  Reservation res4 = new Reservation(1); test.add(res4);
+     *  Reservation res5 = new Reservation(2); test.add(res5);
+     *  Reservation res6 = new Reservation(5); test.add(res6);
+     *  List<Reservation> found;
+     *  found = test.giveReservations(3);
+     *  found.size() === 0; 
+     *  found = test.giveReservations(1);
+     *  found.size() === 2; 
+     *  found.get(0) == res2 === true;
+     *  found.get(1) == res4 === true;
+     *  found = test.giveReservations(5);
+     *  found.size() === 1; 
+     *  found.get(0) == res6 === true;
+     * </pre> 
+     */
+    public List<Reservation> giveReservations(int clientsNo) {
+        List<Reservation> found = new ArrayList<Reservation>();
+        for (Reservation res : reservations)
+            if (res.getClientsNo() == clientsNo) found.add(res);
+        return found;
+    }
+    
+    
+
+}

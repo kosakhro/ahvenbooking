@@ -1,0 +1,481 @@
+package fxAhvenbooking;
+
+
+import java.awt.Desktop;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.ResourceBundle;
+import java.util.Collection;
+import java.util.List;
+
+
+
+import bookings.CalendarView;
+import bookings.Client;
+import bookings.Reservation;
+import bookings.Room;
+import bookings.HoldException;
+import fi.jyu.mit.fxgui.Dialogs;
+import fi.jyu.mit.fxgui.StringGrid;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.TabPane;
+
+
+
+
+/**
+ * handle events appears on the screen  
+ * 
+ * @author Konstantin Sakharovskiy
+ * @version Mar 7, 2019 added reservations
+ * 
+ * event handle for main page
+ */
+public class AhvenbookingGUIController implements Initializable {
+    
+    @FXML private TabPane tabPane;
+    @FXML private StringGrid<Client> chooserClients;
+    @FXML private StringGrid<Reservation> chooserReservations;
+
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle bundle) {
+        platform();      
+    }
+       
+    
+    @FXML private void DoseNotWork() {
+        
+        Dialogs.showMessageDialog("Does not work yet, keep calm");
+        
+    }
+    
+    @FXML private void handlePressedCalendar() {
+
+        paneSwitcher(0);
+
+    }
+  
+    
+    @FXML private void handlePressedClientSearch() {
+      
+        paneSwitcher(1);
+
+    }
+
+
+    @FXML private void handlePressedReservationSearch() {
+        
+        paneSwitcher(2);
+        
+    }    
+    
+    
+    @FXML private void handlePressedClientCard() {
+
+        newClient();
+
+    }
+    
+    
+
+
+
+    @FXML private void handleHelp() {
+        helping();
+    }
+    
+    
+    @FXML private void handlePressedReservationCard() {
+        
+        newReservation();
+
+    }
+    
+    @FXML private void handlePressedRoomsCard() {
+        
+        newRoom();
+
+    }
+    
+    @FXML private void handleSaving() {
+        
+        saveData();
+    }
+    
+    
+    //==================================================
+    
+    CalendarView calendar = new CalendarView();   
+    private Client clientPoint;
+    private Reservation reservationPoint;
+    
+    
+    /**
+     * set platform to show clients and reservations in panels
+     */
+    protected void platform() {
+
+        chooserClients.clear();      
+        chooserClients.getObject();    
+        chooserClients.setOnMouseClicked(e ->{if (e.getClickCount() == 2) showClient();});
+     
+        chooserReservations.clear();
+        chooserReservations.getObject();
+        chooserReservations.setOnMouseClicked(e ->{if (e.getClickCount() == 2) showReservation();});
+        //chooserReservation.addSelectionListener(e -> showReservation());
+        
+    }
+ 
+    
+    
+    /**
+     * show client by asking Clent class
+     */
+    protected void showClient() {
+        clientPoint = chooserClients.getObject();
+        if (clientPoint == null) return;
+        manageClientCard();
+    }
+    
+  
+    /**
+     * show reservation by asking Reservation class
+     */
+    protected void showReservation() {
+        reservationPoint = chooserReservations.getObject();
+        if (reservationPoint == null) return;
+        manageReservationCard();
+    }
+    
+        
+    
+
+
+
+    /**
+     *  adding client by asking Client class
+     */
+    protected void newClient() {
+        Client client = new Client();
+        client.register();
+        client.autogenerateContent();
+        
+        try {
+            calendar.add(client);
+            
+        } catch (HoldException e) {
+            Dialogs.showMessageDialog("No more clients allowed ");
+            return;
+        }       
+        setClient(client.getRegisterNro());
+        clientPoint = client;
+        manageClientCard();
+    }
+    
+    
+    private void manageClientCard() {
+        if (clientPoint == null) return;
+        try {
+            Client client;
+            client = ClientCardGUIController.askClient(null, clientPoint.clone());
+            if (client == null) return;
+            calendar.replaceOrAddClient(client);
+            setClient(client.getRegisterNro());
+        } catch (CloneNotSupportedException e) {
+            //
+        } catch (HoldException e) {
+            Dialogs.showMessageDialog(e.getMessage());
+        }
+      
+        
+    }
+    
+    private void manageReservationCard() {
+        if (clientPoint == null) return;
+        Dialogs.showMessageDialog("Open window comes soon...");
+        
+    }
+    
+    
+    
+    
+    
+    /**
+     * adding reservation to client by asking reservation class
+     */
+    public void newReservation() {
+        if (clientPoint == null) return;
+        Reservation res = new Reservation();
+        res.register();
+        res.assignReservation(clientPoint.getRegisterNro());
+        calendar.add(res);
+        setClient(clientPoint.getRegisterNro());
+        String resName = "Reservation No: " + res.getReservationNo();
+        chooserReservations.add(res, resName);
+    }
+    
+    /**
+     * adding rooms to reservation 
+     */
+    public void newRoom() {
+        if (reservationPoint == null) return;
+        Room rm = new Room();
+        rm.register();
+        rm.assignRoom(reservationPoint.getReservationNo());
+        calendar.add(rm);
+        setClient(clientPoint.getRegisterNro());
+    }
+    
+           
+    /**
+     * set client to chooser by number
+     * @param clientnro clients number
+     */
+    protected void setClient(int clientnro) {
+        chooserClients.clear();
+        //int index = 0;
+        for (int i = 0; i < calendar.getClients(); i++) {
+            Client client = calendar.giveClient(i);
+            if (client.getRegisterNro() == clientnro);// index = i;
+            chooserClients.add( client);
+        }
+
+    }
+        
+    /**
+     * set own calendar
+     * @param calendar using calendar
+     */
+    public void setCalendarView(CalendarView calendar) {
+        this.calendar = calendar;
+        showClient();
+        
+    }
+    
+    
+    
+
+
+
+    /**
+     * handle opening databases 
+     * @return true if name ok
+     */
+    public boolean open() {
+        String dataname = "test";
+        readData(dataname);
+        setChooserClient(calendar.searchClient(null, 0));
+        setChooserReservation(calendar.searchReservation(null, 0));
+        return true;
+    }
+    
+    private void setChooserClient( Collection<Client> clients) {
+        Client client = new Client();
+        int firstLane = 0; 
+        int lastLane = 23; 
+        String[] headings = new String[lastLane - firstLane];
+        for (int k = firstLane; k < lastLane; k++) {
+            headings[k - firstLane] = client.getQuest(k);        
+        }
+        chooserClients.initTable(headings);
+        
+        for (int k = firstLane; k < lastLane; k++) {
+            chooserClients.setAlignment(k - firstLane, 0 );
+        }
+    
+        chooserClients.setOnCellString( (g, jasen, defValue, r, c) -> jasen.give(c + firstLane) );      
+        chooserClients.setEditable(false);      
+        chooserClients.add(clients);
+    }
+    
+    private void setChooserReservation( Collection<Reservation> reservations) {
+        Reservation reservation = new Reservation();
+        int firstLane = 0; 
+        int lastLane = 9; 
+        String[] headings = new String[lastLane - firstLane];
+        for (int k = firstLane; k < lastLane; k++) {
+            headings[k - firstLane] = reservation.getQuest(k);        
+        }
+        chooserReservations.initTable(headings);
+        
+        for (int k = firstLane; k < lastLane; k++) {
+            chooserReservations.setAlignment(k - firstLane, 0 );
+        }
+    
+        chooserReservations.setOnCellString( (g, jasen, defValue, r, c) -> jasen.give(c + firstLane) );      
+        chooserReservations.setEditable(false);      
+        chooserReservations.add(reservations);
+    }
+    
+    
+    
+    
+
+
+    
+
+    
+    /**
+     * read data from bases
+     * @param name database name
+     * @return null if success and mistake if throws exception
+     */
+    protected String readData(String name) {
+        try {
+            calendar.readData(name);
+            uploadClient(0);
+            uploadReservation(0);
+            return null;
+            
+        } catch (HoldException ex) {
+            String mistake = ex.getMessage();
+            if ( mistake != null ) Dialogs.showMessageDialog(mistake);
+            return mistake;
+        }
+        
+    }
+    
+    
+    /**
+     * upload client by clients number
+     * @param clientNr clients number
+     */
+    protected void uploadClient(int clientNr) {        
+        
+        chooserClients.clear();
+        int index = 0;
+        Collection<Client> clients;
+        clients = calendar.searchClient("", index);
+        int i = 0;
+        for (Client client : clients) {
+            if (client.getRegisterNro() == clientNr) index = i;
+            chooserClients.add( client, client.getName());
+            i++;
+            
+            
+        }
+    }
+    
+    /**
+     * upload reservation by reservations number
+     * @param reservtNr reservations number
+     */
+    protected void uploadReservation(int reservtNr) {        
+        chooserReservations.clear();
+        int index = 0;
+        Collection<Reservation> reserv;
+        reserv = calendar.searchReservation("", index);
+        int i = 0;
+        for (Reservation reservation : reserv) {
+            if (reservation.getReservationNo() == reservtNr) index = i;
+            String resName = "Reservation No: " + reservation.getReservationNo();
+            chooserReservations.add(reservation, resName);
+            i++;
+            
+            
+        }
+
+    }
+    
+    
+    
+    
+
+    
+    
+    
+    //============================= Service methods section
+    
+    
+    
+    /**
+     * Printing clients info include all reservations, include all rooms
+     * @param os datastream to print
+     * @param client printing client
+     */
+    public void printing(PrintStream os, final Client client) {
+        os.println("========================================");
+        client.printing(os);
+        os.println("=========================================");
+        List<Reservation> reservations = calendar.giveReservations(client);   
+        for (Reservation res: reservations) {
+            res.printing(os);
+            os.println("+++++++++++++++++++++++++++++++++++++++");
+            List<Room> rooms = calendar.giveRooms(res);   
+            for (Room rm: rooms) {
+                rm.printing(os);
+                os.println("......................................");
+            }
+        }
+        
+    }
+    
+    /**
+     * Printing reservations info, include all rooms
+     * @param os datastream to print
+     * @param reservation printing reservation
+     */
+    public void printing(PrintStream os, final Reservation reservation) {
+        os.println("+++++++++++++++++++++++++++++++++++++++");
+        reservation.printing(os);
+        os.println("+++++++++++++++++++++++++++++++++++++++");
+        List<Room> rooms = calendar.giveRooms(reservation);   
+        for (Room rm: rooms) {
+            rm.printing(os);
+            os.println("......................................");
+        }
+        
+    }
+    
+    
+    /**
+     * link request to the program help page - coursework project page
+     */
+    private void helping() {
+        Desktop desktop = Desktop.getDesktop();
+        try {
+            URI uri = new URI("https://tim.jyu.fi/view/kurssit/tie/ohj2/2019k/ht/ahvenbooking");
+            desktop.browse(uri);
+        } catch (URISyntaxException e) {
+            return;
+        } catch (IOException e) {
+            return;
+        }
+    }
+    
+    /*
+     * Saving all data
+     */
+    private String saveData() {
+        
+        try {
+            calendar.saveData();            
+            return null;
+        } catch (HoldException ex) {
+            Dialogs.showMessageDialog("Saving problem" + ex.getMessage());
+            return ex.getMessage();
+        }
+
+    }
+ 
+    /**
+     * Switch between tab panes
+     * @param i index of tab
+     */
+    public void paneSwitcher(int i) {
+        tabPane.getSelectionModel().select(i);
+        
+    }
+    
+    
+    
+    
+    
+    
+}

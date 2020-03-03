@@ -1,0 +1,25 @@
+
+package bookings;
+
+/**
+ * Does not know Reservations, Clients or Bases 
+ * Know and may check type of rooms             
+ * Can be added (no change or deleting)         
+ * Can deliver information to RoomsBase class   
+ * @author Konsta Sakharovskiy 
+ * @version Mar 7, 2019
+ *
+ */
+public class Room {
+
+    /**
+     * Main used to test the class
+     * @param args not in use
+     */
+    public static void main(String[] args) {
+        //
+    
+    
+    }
+
+}

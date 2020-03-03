@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import fi.jyu.mit.fxgui.ComboBoxChooser?>
+<?import fi.jyu.mit.fxgui.StringGrid?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxAhvenbooking.AhvenbookingGUIController">
+   <children>
+      <SplitPane dividerPositions="0.11623246492985972" layoutX="14.0" layoutY="26.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="100.0" prefHeight="398.0" prefWidth="457.0" SplitPane.resizableWithParent="false">
+               <children>
+                  <SplitPane dividerPositions="0.09563758389261745" orientation="VERTICAL" prefHeight="598.0" prefWidth="112.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <items>
+                      <AnchorPane minHeight="55.0" minWidth="0.0" prefHeight="51.0" prefWidth="110.0" SplitPane.resizableWithParent="false">
+                           <children>
+                              <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMousePressed="#DoseNotWork" text="UPDATE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <font>
+                                    <Font size="12.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="110.0">
+                           <children>
+                              <GridPane layoutX="-57.0" layoutY="36.0" prefHeight="533.0" prefWidth="110.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Button mnemonicParsing="false" onMousePressed="#handlePressedCalendar" prefHeight="57.0" prefWidth="110.0" text="📅    Calendar" GridPane.rowIndex="1">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Button>
+                                    <Button layoutX="10.0" layoutY="119.0" mnemonicParsing="false" onMousePressed="#handlePressedReservationSearch" prefHeight="52.0" prefWidth="113.0" text="🗝  Bookings" GridPane.rowIndex="3">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Button>
+                                    <TextField promptText="search...">
+                                       <GridPane.margin>
+                                          <Insets left="5.0" right="5.0" />
+                                       </GridPane.margin>
+                                    </TextField>
+                                    <Button mnemonicParsing="false" onMousePressed="#DoseNotWork" prefHeight="52.0" prefWidth="113.0" text="‰ Accounts" GridPane.rowIndex="4">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onMousePressed="#DoseNotWork" prefHeight="52.0" prefWidth="113.0" text="📈  Analytics" GridPane.rowIndex="5">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onMousePressed="#DoseNotWork" prefHeight="52.0" prefWidth="113.0" text="⚙    Settings" GridPane.rowIndex="6">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onMousePressed="#DoseNotWork" prefHeight="52.0" prefWidth="113.0" text="🔗  Channels" GridPane.rowIndex="7">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onMousePressed="#handleHelp" prefHeight="52.0" prefWidth="113.0" text="?   Help" GridPane.rowIndex="8">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onMousePressed="#DoseNotWork" prefHeight="52.0" prefWidth="113.0" text="Contacts" GridPane.rowIndex="9" />
+                                    <Button layoutX="10.0" layoutY="173.0" mnemonicParsing="false" onMousePressed="#handlePressedClientSearch" prefHeight="52.0" prefWidth="113.0" text="👥     Clients" GridPane.rowIndex="2">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </GridPane>
+                           </children>
+                        </AnchorPane>
+                    </items>
+                  </SplitPane>
+               </children>
+            </AnchorPane>
+            <TabPane fx:id="tabPane">
+               <tabs>
+                  <Tab onCloseRequest="#DoseNotWork" text="Calendar">
+                     <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="260.0">
+                           <children>
+                              <BorderPane prefHeight="598.0" prefWidth="878.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <top>
+                                    <HBox maxHeight="46.0" minHeight="46.0" minWidth="-Infinity" prefHeight="46.0" prefWidth="878.0" BorderPane.alignment="CENTER">
+                                       <children>
+                                          <HBox alignment="CENTER" prefHeight="46.0" prefWidth="480.0">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                             <children>
+                                                <DatePicker prefHeight="27.0" prefWidth="125.0" promptText="From">
+                                                   <HBox.margin>
+                                                      <Insets right="3.0" />
+                                                   </HBox.margin>
+                                                </DatePicker>
+                                                <DatePicker prefHeight="27.0" prefWidth="125.0" promptText="To">
+                                                   <HBox.margin>
+                                                      <Insets right="3.0" />
+                                                   </HBox.margin>
+                                                </DatePicker>
+                                                <Button mnemonicParsing="false" onMousePressed="#DoseNotWork" prefHeight="27.0" prefWidth="53.0" text="Day">
+                                                   <HBox.margin>
+                                                      <Insets right="3.0" />
+                                                   </HBox.margin>
+                                                </Button>
+                                                <Button mnemonicParsing="false" onMousePressed="#DoseNotWork" prefHeight="27.0" prefWidth="63.0" text="Week">
+                                                   <HBox.margin>
+                                                      <Insets right="3.0" />
+                                                   </HBox.margin>
+                                                </Button>
+                                                <Button mnemonicParsing="false" onMousePressed="#DoseNotWork" text="Month" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER" prefHeight="32.0" prefWidth="194.0">
+                                             <HBox.margin>
+                                                <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
+                                             </HBox.margin>
+                                             <children>
+                                                <Button mnemonicParsing="false" onMousePressed="#handleSaving" text="Save" />
+                                                <Button mnemonicParsing="false" onMousePressed="#handlePressedRoomsCard" prefHeight="27.0" prefWidth="96.0" text="New Room">
+                                                   <HBox.margin>
+                                                      <Insets left="10.0" />
+                                                   </HBox.margin>
+                                                </Button>
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER" prefHeight="46.0" prefWidth="236.0">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                             <children>
+                                                <Button mnemonicParsing="false" onMousePressed="#handlePressedClientCard" prefHeight="27.0" prefWidth="86.0" text="New Client">
+                                                   <HBox.margin>
+                                                      <Insets right="3.0" />
+                                                   </HBox.margin>
+                                                </Button>
+                                                <Button mnemonicParsing="false" onMousePressed="#handlePressedReservationCard" text="New Reservation">
+                                                   <font>
+                                                      <Font name="System Bold" size="13.0" />
+                                                   </font>
+                                                </Button>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </HBox>
+                                 </top>
+                              </BorderPane>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab text="Clients">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <BorderPane prefHeight="598.0" prefWidth="878.0">
+                                 <top>
+                                    <ToolBar prefHeight="60.0" prefWidth="846.0" BorderPane.alignment="CENTER">
+                                       <items>
+                                          <Label text="Search by:" />
+                                          <ComboBoxChooser fx:id="clientSearchLines" onAction="#handleClientSearch" prefHeight="27.0" prefWidth="148.0" rivit="register number&#10;title   &#10;name    &#10;surname &#10;street  &#10;street2 &#10;zip     &#10;city    &#10;country title   &#10;name    &#10;surname &#10;street  &#10;street2 &#10;zip     &#10;city    &#10;country " />
+                                          <HBox alignment="CENTER_LEFT" prefHeight="48.0" prefWidth="222.0">
+                                             <children>
+                                                <TextField fx:id="clientSearch" onKeyReleased="#handleClientSearch" prefHeight="27.0" prefWidth="195.0" promptText="search text" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_RIGHT" prefHeight="48.0">
+                                             <children>
+                                                <Button defaultButton="true" mnemonicParsing="false" onMouseClicked="#handlePressedClientCard" text="New client">
+                                                   <HBox.margin>
+                                                      <Insets right="10.0" />
+                                                   </HBox.margin>
+                                                </Button>
+                                                <Button mnemonicParsing="false" onMousePressed="#DoseNotWork" text="Last view">
+                                                   <HBox.margin>
+                                                      <Insets right="10.0" />
+                                                   </HBox.margin>
+                                                </Button>
+                                                <Button mnemonicParsing="false" onMousePressed="#DoseNotWork" text="Last booked">
+                                                   <HBox.margin>
+                                                      <Insets right="10.0" />
+                                                   </HBox.margin>
+                                                </Button>
+                                                <Button mnemonicParsing="false" onMousePressed="#DoseNotWork" text="Download all">
+                                                   <HBox.margin>
+                                                      <Insets right="20.0" />
+                                                   </HBox.margin>
+                                                </Button>
+                                             </children>
+                                          </HBox>
+                                       </items>
+                                    </ToolBar>
+                                 </top>
+                                 <center>
+                                    <StringGrid fx:id="chooserClients" onMouseClicked="#handlePressedClientCard" BorderPane.alignment="CENTER">
+                                       <BorderPane.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </BorderPane.margin>
+                                    </StringGrid>
+                                 </center>
+                              </BorderPane>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+                  <Tab text="Bookings">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <BorderPane prefHeight="598.0" prefWidth="878.0">
+                                 <top>
+                                    <ToolBar prefHeight="60.0" prefWidth="846.0" BorderPane.alignment="CENTER">
+                                       <items>
+                                          <HBox alignment="CENTER_LEFT" prefHeight="48.0" prefWidth="365.0">
+                                             <children>
+                                                <ComboBox editable="true" prefHeight="35.0" prefWidth="342.0" promptText="Search / select reservation" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_RIGHT" prefHeight="48.0">
+                                             <children>
+                                                <Button defaultButton="true" mnemonicParsing="false" onMousePressed="#handlePressedReservationCard" text="New reservation">
+                                                   <HBox.margin>
+                                                      <Insets right="10.0" />
+                                                   </HBox.margin>
+                                                </Button>
+                                                <Button mnemonicParsing="false" onMousePressed="#DoseNotWork" text="Last view">
+                                                   <HBox.margin>
+                                                      <Insets right="10.0" />
+                                                   </HBox.margin>
+                                                </Button>
+                                                <Button mnemonicParsing="false" onMousePressed="#DoseNotWork" text="Last booked">
+                                                   <HBox.margin>
+                                                      <Insets right="10.0" />
+                                                   </HBox.margin>
+                                                </Button>
+                                                <Button mnemonicParsing="false" onMousePressed="#DoseNotWork" text="Download all">
+                                                   <HBox.margin>
+                                                      <Insets right="20.0" />
+                                                   </HBox.margin>
+                                                </Button>
+                                             </children>
+                                          </HBox>
+                                       </items>
+                                    </ToolBar>
+                                 </top>
+                                 <center>
+                                    <StringGrid fx:id="chooserReservations" rivit="id|Day in|Day out|Name|Surname|email|Phone|Rooms|Amount|Status|Source&#10;1|12-Mar-2018|02-Sep-2018|Veriee|Watmore|vwatmore0@dot.gov|+55 238 459 5988|295|135|XL|RVSB&#10;2|14-Jun-2018|08-Sep-2018|Freddy|Skunes|fskunes1@redcross.org|+370 324 169 1445|380|199|S|TUTT&#10;3|16-Jun-2018|14-Sep-2018|Bowie|Dibben|bdibben2@mysql.com|+7 885 624 0274|141|120|XS|CETX&#10;4|10-Dec-2018|24-Aug-2018|Karine|Glassford|kglassford3@youtube.com|+81 733 903 7886|570|149|3XL|EOG&#10;5|01-Jun-2018|20-Sep-2018|Natalya|Chyuerton|nchyuerton4@timesonline.co.uk|+62 181 737 4335|457|168|L|HAIN&#10;6|11-Aug-2018|28-Dec-2018|Vonni|Mackie|vmackie5@discuz.net|+81 255 405 3404|685|122|XL|DQ&#10;7|03-Aug-2018|26-Aug-2018|Hercules|Scantleberry|hscantleberry6@nbcnews.com|+30 595 276 8412|742|123|XS|FARM&#10;8|24-Jun-2018|15-May-2018|Gregg|Lashford|glashford7@cmu.edu|+967 217 133 9496|173|139|2XL|SSW^G&#10;9|28-May-2018|27-Dec-2018|Helenka|O'Cahey|hocahey8@bloglines.com|+30 142 153 1595|379|170|S|AAOI&#10;10|09-Oct-2018|01-Jan-2019|Marijo|Jouen|mjouen9@squarespace.com|+98 496 524 1763|500|111|XS|CRDTid|Day in|Day out|Name|Surname|email|Phone|Rooms|Amount|Status|Source&#10;" BorderPane.alignment="CENTER" />
+                                 </center>
+                              </BorderPane>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+               </tabs>
+            </TabPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

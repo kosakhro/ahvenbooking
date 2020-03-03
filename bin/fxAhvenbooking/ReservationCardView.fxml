@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxAhvenbooking.ReservationCardGUIController">
+   <children>
+      <SplitPane dividerPositions="0.11623246492985972" layoutX="14.0" layoutY="26.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="100.0" prefHeight="398.0" prefWidth="457.0" SplitPane.resizableWithParent="false">
+               <children>
+                  <SplitPane dividerPositions="0.09563758389261745" orientation="VERTICAL" prefHeight="598.0" prefWidth="112.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <items>
+                      <AnchorPane minHeight="55.0" minWidth="0.0" prefHeight="51.0" prefWidth="110.0" SplitPane.resizableWithParent="false">
+                           <children>
+                              <Button mnemonicParsing="false" onMousePressed="#DoseNotWork" text="HOME/UPDATE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <font>
+                                    <Font size="12.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="110.0">
+                           <children>
+                              <GridPane layoutX="-57.0" layoutY="36.0" prefHeight="533.0" prefWidth="110.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Button mnemonicParsing="false" onMousePressed="#handlePressedCalendar" prefHeight="57.0" prefWidth="110.0" text="📅    Calendar" GridPane.rowIndex="1">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Button>
+                                    <Button layoutX="10.0" layoutY="119.0" mnemonicParsing="false" onMousePressed="#handlePressedReservationSearch" prefHeight="52.0" prefWidth="113.0" text="🗝  Bookings" GridPane.rowIndex="3">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Button>
+                                    <TextField promptText="search...">
+                                       <GridPane.margin>
+                                          <Insets left="5.0" right="5.0" />
+                                       </GridPane.margin>
+                                    </TextField>
+                                    <Button mnemonicParsing="false" onMousePressed="#DoseNotWork" prefHeight="52.0" prefWidth="113.0" text="‰ Accounts" GridPane.rowIndex="4">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onMousePressed="#DoseNotWork" prefHeight="52.0" prefWidth="113.0" text="📈  Analytics" GridPane.rowIndex="5">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onMousePressed="#DoseNotWork" prefHeight="52.0" prefWidth="113.0" text="⚙    Settings" GridPane.rowIndex="6">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onMousePressed="#DoseNotWork" prefHeight="52.0" prefWidth="113.0" text="🔗  Channels" GridPane.rowIndex="7">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onMousePressed="#DoseNotWork" prefHeight="52.0" prefWidth="113.0" text="?   Help" GridPane.rowIndex="8">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onMousePressed="#DoseNotWork" prefHeight="52.0" prefWidth="113.0" text="Contacts" GridPane.rowIndex="9" />
+                                    <Button layoutX="10.0" layoutY="173.0" mnemonicParsing="false" onMousePressed="#handlePressedClientSearch" prefHeight="52.0" prefWidth="113.0" text="👥     Clients" GridPane.rowIndex="2">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </GridPane>
+                           </children>
+                        </AnchorPane>
+                    </items>
+                  </SplitPane>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="260.0">
+               <children>
+                  <BorderPane layoutX="14.0" layoutY="8.0" prefHeight="598.0" prefWidth="878.0" AnchorPane.bottomAnchor="-8.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="-14.0" AnchorPane.topAnchor="8.0">
+                     <top>
+                        <ToolBar prefHeight="60.0" BorderPane.alignment="CENTER">
+                           <items>
+                              <HBox alignment="CENTER_LEFT" prefHeight="48.0" prefWidth="435.0">
+                                 <children>
+                                    <Label text="reservation id">
+                                       <font>
+                                          <Font size="17.0" />
+                                       </font></Label>
+                                    <Label text="Name Surname">
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="6.0" right="10.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label prefHeight="14.0" prefWidth="80.0" text="STATUS" underline="true">
+                                       <font>
+                                          <Font size="17.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_RIGHT" prefHeight="48.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onMousePressed="#DoseNotWork" text="Contact">
+                                       <HBox.margin>
+                                          <Insets right="10.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onMousePressed="#DoseNotWork" text="Delete">
+                                       <HBox.margin>
+                                          <Insets right="10.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                    <Button defaultButton="true" mnemonicParsing="false" onMousePressed="#DoseNotWork" text="Save">
+                                       <HBox.margin>
+                                          <Insets right="10.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onMousePressed="#DoseNotWork" text="Add/delete room">
+                                       <HBox.margin>
+                                          <Insets right="20.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                           </items>
+                        </ToolBar>
+                     </top>
+                     <center>
+                        <HBox prefHeight="289.0" prefWidth="892.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <BorderPane prefHeight="308.0" prefWidth="288.0">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                                 <top>
+                                    <Label text="Name and Contacts" textFill="#908a8a" BorderPane.alignment="TOP_LEFT">
+                                       <padding>
+                                          <Insets bottom="3.0" left="10.0" right="3.0" top="3.0" />
+                                       </padding>
+                                    </Label>
+                                 </top>
+                                 <center>
+                                    <GridPane BorderPane.alignment="CENTER">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <Label text="Name" textFill="#908b8b" />
+                                          <Label text="SURNAME" textFill="#908b8b" GridPane.rowIndex="1" />
+                                          <Label text="Phone" textFill="#908b8b" GridPane.rowIndex="2" />
+                                          <Label text="Email" textFill="#908b8b" GridPane.rowIndex="3" />
+                                          <Label text="Loyality origram" textFill="#908b8b" GridPane.rowIndex="4" />
+                                       </children>
+                                       <BorderPane.margin>
+                                          <Insets />
+                                       </BorderPane.margin>
+                                    </GridPane>
+                                 </center>
+                                 <padding>
+                                    <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                                 </padding>
+                              </BorderPane>
+                              <BorderPane prefHeight="308.0" prefWidth="278.0">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                                 <top>
+                                    <Label text="Details" textFill="#908a8a" BorderPane.alignment="TOP_LEFT">
+                                       <padding>
+                                          <Insets bottom="3.0" left="10.0" right="3.0" top="3.0" />
+                                       </padding>
+                                       <BorderPane.margin>
+                                          <Insets />
+                                       </BorderPane.margin>
+                                    </Label>
+                                 </top>
+                                 <center>
+                                    <GridPane BorderPane.alignment="CENTER">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <TextField promptText="Reference #" GridPane.rowIndex="6">
+                                             <padding>
+                                                <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                             </padding>
+                                          </TextField>
+                                          <ComboBox editable="true" nodeOrientation="RIGHT_TO_LEFT" prefHeight="27.0" prefWidth="260.0" promptText="Source" />
+                                          <CheckBox mnemonicParsing="false" prefHeight="18.0" prefWidth="237.0" text=" Prereservation" textOverrun="CLIP" GridPane.rowIndex="7" />
+                                          <ComboBox editable="true" nodeOrientation="RIGHT_TO_LEFT" prefHeight="27.0" prefWidth="264.0" promptText="Managed by" GridPane.rowIndex="5" />
+                                          <ComboBox editable="true" nodeOrientation="RIGHT_TO_LEFT" prefHeight="27.0" prefWidth="260.0" promptText="Residency" GridPane.rowIndex="1" />
+                                       </children>
+                                       <BorderPane.margin>
+                                          <Insets />
+                                       </BorderPane.margin>
+                                    </GridPane>
+                                 </center>
+                                 <padding>
+                                    <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                                 </padding>
+                              </BorderPane>
+                              <BorderPane prefHeight="308.0" prefWidth="282.0">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                                 <top>
+                                    <Label text="Special requests" textFill="#908a8a" BorderPane.alignment="TOP_LEFT">
+                                       <padding>
+                                          <Insets bottom="3.0" left="10.0" right="3.0" top="3.0" />
+                                       </padding>
+                                    </Label>
+                                 </top>
+                                 <center>
+                                    <TextArea prefHeight="200.0" prefWidth="222.0" promptText="Any text" BorderPane.alignment="CENTER" />
+                                 </center>
+                                 <padding>
+                                    <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                                 </padding>
+                              </BorderPane>
+                           </children>
+                           <BorderPane.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </BorderPane.margin>
+                           <padding>
+                              <Insets bottom="10.0" />
+                           </padding>
+                        </HBox>
+                     </center>
+                     <bottom>
+                        <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <left>
+                              <BorderPane prefHeight="180.0" prefWidth="565.0" BorderPane.alignment="CENTER">
+                                 <top>
+                                    <Label text="Rooms" BorderPane.alignment="TOP_LEFT" />
+                                 </top>
+                                 <left>
+                                    <TableView prefHeight="149.0" prefWidth="550.0" BorderPane.alignment="CENTER">
+                                      <columns>
+                                        <TableColumn prefWidth="28.0" text="#" />
+                                          <TableColumn prefWidth="58.666656494140625" text="Room" />
+                                        <TableColumn prefWidth="39.0" text="From" />
+                                          <TableColumn prefWidth="42.0" text="To" />
+                                          <TableColumn prefWidth="48.0" text="Nights" />
+                                          <TableColumn prefWidth="59.0" text="Guests" />
+                                          <TableColumn prefWidth="51.0" text="Adults" />
+                                          <TableColumn prefWidth="38.0" text="Kids" />
+                                          <TableColumn prefWidth="55.0" text="Babys" />
+                                          <TableColumn prefWidth="40.0" text="Lock" />
+                                          <TableColumn prefWidth="43.0" text="in" />
+                                          <TableColumn prefWidth="45.0" text="out" />
+                                      </columns>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <BorderPane.margin>
+                                          <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
+                                       </BorderPane.margin>
+                                       <padding>
+                                          <Insets top="7.0" />
+                                       </padding>
+                                    </TableView>
+                                 </left>
+                                 <BorderPane.margin>
+                                    <Insets bottom="20.0" />
+                                 </BorderPane.margin>
+                              </BorderPane>
+                           </left>
+                           <right>
+                              <BorderPane prefHeight="180.0" prefWidth="289.0" BorderPane.alignment="CENTER">
+                                 <top>
+                                    <Label text="Payments" BorderPane.alignment="TOP_LEFT" />
+                                 </top>
+                                 <BorderPane.margin>
+                                    <Insets bottom="20.0" right="20.0" />
+                                 </BorderPane.margin>
+                                 <center>
+                                    <TableView prefHeight="200.0" prefWidth="217.0" BorderPane.alignment="CENTER">
+                                      <columns>
+                                        <TableColumn prefWidth="46.0" text="Date" />
+                                        <TableColumn prefWidth="56.0" text="By" />
+                                          <TableColumn prefWidth="61.0" text="Amout" />
+                                          <TableColumn prefWidth="98.0" text="Comment" />
+                                      </columns>
+                                       <BorderPane.margin>
+                                          <Insets bottom="7.0" left="7.0" right="20.0" top="7.0" />
+                                       </BorderPane.margin>
+                                    </TableView>
+                                 </center>
+                              </BorderPane>
+                           </right>
+                        </BorderPane>
+                     </bottom>
+                  </BorderPane>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

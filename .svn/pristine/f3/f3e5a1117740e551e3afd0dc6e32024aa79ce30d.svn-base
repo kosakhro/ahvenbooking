@@ -1,0 +1,34 @@
+=----------------------------------------
+= Ohjelmointi 2, 2017, vaihe 2
+=----------------------------------------
+= Katso <a href=".." target="_top">työ vaiheittain</a>
+=
+@https://trac.cc.jyu.fi/projects/ohj2ht/browser/k2019/ahvenbooking = Työ versionhallinnassa
+=
+= <h3>Ohjelman avustus</h3>
+!https://tim.jyu.fi/view/kurssit/tie/ohj2/2019k/ht/ahvenbooking = Project plan in TIM
+=
+=
+= <h3>Ajettava ohjelma</h3>
+= Not ready yet = ajettava ohjelma, lataa ja aja
+=
+= <h3>Ohjelman esisuunnitelma</h3>
+@https://tim.jyu.fi/view/kurssit/tie/ohj2/2017k/ht/vesal1 = Suunnitelma TIMissä
+=
+=
+= <h3>Käyttöliittymän ulkoasu JavaFX:llä</h3>
+src/fxAhvenbooking/AhvenbookingMain.java = main program
+src/fxAhvenbooking/AhvenbookingGUIController.java = manage main page
+src/fxKAhvenbooking/ahvenbooking.css = styles collection
+=
+src/fxAhvenbooking/AhvenbookingGUIView.fxml = Calendar and main page
+src/fxAhvenbooking/ClientSearchView.fxml = search client and see clients database
+src/fxAhvenbooking/ClientCardView.fxml = see and change clients information
+src/fxAhvenbooking/ReservationSearchView.fxml = search client and see reservation database
+src/fxAhvenbooking/ReservationCardView.fxml = see and change reservation information
+=
+= <h3>Muita tiedostoja</h3>
+build.xml = Ant-skripti joka tekee .jar:in
+.project = Eclipsen projekti
+.classpath = Eclipsen luokkapolku
+.settings/org.eclipse.jdt.core.prefs = Eclipsen kääntäjän varoitukset

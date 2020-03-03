@@ -1,0 +1,129 @@
+package fxAhvenbooking;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import fi.jyu.mit.fxgui.Dialogs;
+import fi.jyu.mit.fxgui.ModalController;
+import fi.jyu.mit.fxgui.ModalControllerInterface;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import bookings.Client;
+
+/**
+ * @author Konstantin Sakharovskiy
+ * @version Feb 7, 2019
+ * event handle for Client Card page
+ */
+public class ClientCardGUIController implements ModalControllerInterface<Client>, Initializable  {
+
+    
+    @FXML private Label warning;
+    
+    @FXML private TextField editName;
+    @FXML private TextField editSurname;
+    @FXML private TextField editStreet;
+    @FXML private TextField editStreet2;
+    @FXML private TextField editZIP;
+    @FXML private TextField editCity;
+    
+    
+    @FXML private void DoseNotWork() {
+        
+        Dialogs.showMessageDialog("Does not work yet, keep calm");
+        
+    }
+    
+    @FXML private void handleSave() {
+        
+        ModalController.closeStage(warning);
+        //
+    }
+    
+    @FXML private void handleDelete() {
+        ModalController.closeStage(warning);
+        //
+    }
+    
+    @FXML private void handleNewReservation() {
+        //
+    }
+    
+
+
+    //==================================================
+    
+    private Client clientPoint; 
+    
+
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1) {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+
+
+    @Override
+    public Client getResult() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+
+
+    @Override
+    public void handleShown() {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+
+
+    @Override
+    public void setDefault(Client client) {
+        
+        clientPoint = client;
+        showClient(clientPoint);
+        
+        
+    }
+    
+    /**
+     * @param client - Client to show
+     */
+    public void showClient(Client client) {
+        if (client == null) return;
+        editName.setText(client.getName());
+        editSurname.setText(client.getSurame());
+        editStreet.setText(client.getStreet());
+        editStreet2.setText(client.getStreet2());
+        editZIP.setText(client.getZIP());
+        editCity.setText(client.getCity());
+        
+        
+    }
+
+    /**
+     * Show client in modal controller
+     * @param modalityStage where to show
+     * @param client - client to show
+     * @return new stage with resources
+     */
+    public static Client askClient(Stage modalityStage, Client client) {
+        
+        return ModalController.showModal(ClientCardGUIController.class.getResource("ClientCardView.fxml"), 
+                "Client Card",  modalityStage, client, null);
+        
+        
+    }
+    
+    
+    
+}

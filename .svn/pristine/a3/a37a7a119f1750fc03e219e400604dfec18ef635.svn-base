@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import fi.jyu.mit.fxgui.StringGrid?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxAhvenbooking.ClientSearchGUIController">
+   <children>
+      <SplitPane dividerPositions="0.11623246492985972" layoutX="14.0" layoutY="26.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="100.0" prefHeight="398.0" prefWidth="457.0" SplitPane.resizableWithParent="false">
+               <children>
+                  <SplitPane dividerPositions="0.09563758389261745" orientation="VERTICAL" prefHeight="598.0" prefWidth="112.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <items>
+                      <AnchorPane minHeight="55.0" minWidth="0.0" prefHeight="51.0" prefWidth="110.0" SplitPane.resizableWithParent="false">
+                           <children>
+                              <Button mnemonicParsing="false" onMousePressed="#DoseNotWork" text="HOME/UPDATE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <font>
+                                    <Font size="12.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="110.0">
+                           <children>
+                              <GridPane layoutX="-57.0" layoutY="36.0" prefHeight="533.0" prefWidth="110.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Button mnemonicParsing="false" onMousePressed="#handlePressedCalendar" prefHeight="57.0" prefWidth="110.0" text="📅    Calendar" GridPane.rowIndex="1">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Button>
+                                    <Button layoutX="10.0" layoutY="119.0" mnemonicParsing="false" onMousePressed="#handlePressedReservationSearch" prefHeight="52.0" prefWidth="113.0" text="🗝  Bookings" GridPane.rowIndex="3">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Button>
+                                    <TextField promptText="search...">
+                                       <GridPane.margin>
+                                          <Insets left="5.0" right="5.0" />
+                                       </GridPane.margin>
+                                    </TextField>
+                                    <Button mnemonicParsing="false" onMousePressed="#DoseNotWork" prefHeight="52.0" prefWidth="113.0" text="‰ Accounts" GridPane.rowIndex="4">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onMousePressed="#DoseNotWork" prefHeight="52.0" prefWidth="113.0" text="📈  Analytics" GridPane.rowIndex="5">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onMousePressed="#DoseNotWork" prefHeight="52.0" prefWidth="113.0" text="⚙    Settings" GridPane.rowIndex="6">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onMousePressed="#DoseNotWork" prefHeight="52.0" prefWidth="113.0" text="🔗  Channels" GridPane.rowIndex="7">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onMousePressed="#DoseNotWork" prefHeight="52.0" prefWidth="113.0" text="?   Help" GridPane.rowIndex="8">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onMousePressed="#DoseNotWork" prefHeight="52.0" prefWidth="113.0" text="Contacts" GridPane.rowIndex="9" />
+                                    <Button layoutX="10.0" layoutY="173.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="113.0" text="👥     Clients" GridPane.rowIndex="2">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </GridPane>
+                           </children>
+                        </AnchorPane>
+                    </items>
+                  </SplitPane>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="260.0">
+               <children>
+                  <BorderPane layoutX="14.0" layoutY="8.0" prefHeight="598.0" prefWidth="878.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <top>
+                        <ToolBar prefHeight="60.0" prefWidth="846.0" BorderPane.alignment="CENTER">
+                           <items>
+                              <HBox alignment="CENTER_LEFT" prefHeight="48.0" prefWidth="365.0">
+                                 <children>
+                                    <ComboBox editable="true" prefHeight="35.0" prefWidth="342.0" promptText="Search / select client" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_RIGHT" prefHeight="48.0">
+                                 <children>
+                                    <Button defaultButton="true" mnemonicParsing="false" onMousePressed="#handlePressedClientCard" text="New client">
+                                       <HBox.margin>
+                                          <Insets right="10.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onMousePressed="#DoseNotWork" text="Last view">
+                                       <HBox.margin>
+                                          <Insets right="10.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onMousePressed="#DoseNotWork" text="Last booked">
+                                       <HBox.margin>
+                                          <Insets right="10.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onMousePressed="#DoseNotWork" text="Download all">
+                                       <HBox.margin>
+                                          <Insets right="20.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                           </items>
+                        </ToolBar>
+                     </top>
+                     <center>
+                        <StringGrid rivit="id|Name|Surname|Phone|email|Language|Loyality|Reservations|Some&#10;1|Dylan|Smithers|+54 488 701 8324|dsmithers0@google.ru|Czech|true|1|amazon.co.jp&#10;2|Ashbey|Comelini|+86 746 515 4302|acomelini1@tinyurl.com|Filipino|true|1|ucla.edu&#10;3|Melita|Brammall|+48 302 953 9089|mbrammall2@va.gov|Czech|false|0|admin.ch&#10;4|Ottilie|Giovannelli|+1 126 397 7152|ogiovannelli3@opensource.org|Telugu|true|0|github.io&#10;5|Myrtice|Hanstock|+385 230 960 0674|mhanstock4@webeden.co.uk|Korean|false|0|twitpic.com&#10;6|Janith|Corkitt|+62 373 806 5398|jcorkitt5@dailymail.co.uk|Dari|true|1|last.fm&#10;7|Lynnelle|Vitte|+30 799 763 9813|lvitte6@printfriendly.com|Hiri Motu|false|0|bigcartel.com&#10;8|Mabelle|Colleford|+48 851 275 5928|mcolleford7@uol.com.br|Burmese|false|0|independent.co.uk&#10;9|Anatola|Kiessel|+351 775 251 9104|akiessel8@hp.com|Norwegian|false|0|odnoklassniki.ru&#10;10|Mannie|Doornbos|+234 275 820 3491|mdoornbos9@goodreads.com|Sotho|true|1|technorati.comid|Name|Surname|Phone|email|Language|Loyality|Reservations|Some&#10;" BorderPane.alignment="CENTER">
+                           <BorderPane.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </BorderPane.margin>
+                        </StringGrid>
+                     </center>
+                  </BorderPane>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
